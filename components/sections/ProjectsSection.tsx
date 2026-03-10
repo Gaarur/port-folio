@@ -172,8 +172,6 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
         opacity: { duration: 0.7, delay: i * 0.1 } 
       }}
       style={{
-        position: "sticky",
-        top: `calc(88px + ${i * 24}px)`,
         background: p.bg,
         borderRadius: 24,
         padding: "clamp(24px, 5vw, 48px)",
@@ -188,8 +186,11 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
         zIndex: i,
         boxShadow: `0 0 60px 0 ${p.accentColor}18`,
         transformStyle: "preserve-3d",
-      }}
-      className="lg:grid lg:grid-cols-2 lg:gap-10"
+        // Pass the index as a CSS variable for the sticky top calculation in Tailwind
+        // @ts-ignore
+        "--index": i,
+      } as React.CSSProperties}
+      className="relative lg:sticky lg:top-[calc(88px+var(--index)*24px)] lg:grid lg:grid-cols-2 lg:gap-10"
     >
       {/* Background glow blob */}
       <div style={{
@@ -379,7 +380,8 @@ export default function ProjectsSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-[projects.length + 5] bg-[#0D1929] px-6 py-20 mt-20 -mx-6 shadow-[0_-40px_40px_#0D1929]"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative bg-[#0D1929] px-6 py-20 mt-20 -mx-6 shadow-[0_-40px_40px_#0D1929]"
+                style={{ zIndex: projects.length + 5 }}
               >
                 {otherProjects.map((p, i) => (
                   <motion.div
