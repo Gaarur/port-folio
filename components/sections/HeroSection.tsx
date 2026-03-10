@@ -213,10 +213,10 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="serif-heading"
           style={{ 
-            fontSize: "clamp(1.8rem, 4vw, 3.2rem)", 
+            fontSize: "clamp(2rem, 8vw, 3.2rem)", 
             marginBottom: 20, 
             color: "#fff", 
-            lineHeight: 1.1,
+            lineHeight: 1.15,
             letterSpacing: "-0.01em"
           }}
         >
@@ -232,16 +232,16 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.35 }}
           style={{
             color: "#8B9CB8",
-            fontSize: "1.15rem",
+            fontSize: "clamp(1rem, 3.5vw, 1.15rem)",
             lineHeight: 1.6,
             maxWidth: 480,
             marginBottom: 40,
           }}
         >
           I&apos;m Utkarsh Raj, an M.Tech AI student at IIT Patna.
-          <br />
+          <br className="hidden sm:block" />
           My interest lies in AI systems, software development,
-          <br />
+          <br className="hidden sm:block" />
           full-stack web apps, and research.
         </motion.p>
 
@@ -250,7 +250,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}
+          className="flex flex-wrap gap-4 md:gap-6 justify-center"
         >
           {[
             {
@@ -271,30 +271,12 @@ export default function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               title={s.label}
+              className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-250 border border-white/12 bg-white/3 hover:border-green-400/50 hover:text-green-400 hover:-translate-y-0.5"
               style={{
-                width: 64,
-                height: 64,
-                borderRadius: "50%",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
                 color: "#8B9CB8",
                 fontSize: s.label === "LeetCode" ? "0.75rem" : "0.95rem",
                 fontWeight: 700,
                 textDecoration: "none",
-                transition: "all 0.25s ease",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(74,222,128,0.5)";
-                (e.currentTarget as HTMLAnchorElement).style.color = "#4ADE80";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.12)";
-                (e.currentTarget as HTMLAnchorElement).style.color = "#8B9CB8";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
               }}
             >
               {s.icon}

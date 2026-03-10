@@ -78,78 +78,60 @@ export default function TimelineSection() {
 
         {/* Timeline Items */}
         <div style={{ position: "relative" }}>
-          {/* Vertical line */}
-          <div style={{
-            position: "absolute",
-            left: "50%",
-            top: 0,
-            bottom: 0,
-            width: 1,
-            background: "rgba(255,255,255,0.07)",
-            transform: "translateX(-50%)",
-          }} />
+          {/* Vertical line - hidden on mobile, left on md, center on lg? Let's just do left-ish on mobile/tablet */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-white/7 -translate-x-1/2" />
 
-          {milestones.map((m, i) => {
-            const isLeft = i % 2 === 0;
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.65, delay: 0.1, ease: EASE }}
-                style={{
-                  display: "flex",
-                  justifyContent: isLeft ? "flex-start" : "flex-end",
-                  marginBottom: 48,
-                  position: "relative",
-                }}
-              >
-                {/* Dot in center */}
-                <div style={{
-                  position: "absolute",
-                  left: "50%",
-                  top: 20,
-                  width: 12,
-                  height: 12,
-                  borderRadius: "50%",
-                  background: m.accent,
-                  transform: "translateX(-50%)",
-                  boxShadow: `0 0 12px ${m.accent}80`,
-                  zIndex: 1,
-                }} />
+          <div className="flex flex-col gap-8 md:gap-12 pl-10 md:pl-0">
+            {milestones.map((m, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.65, delay: 0.1, ease: EASE }}
+                  className={`relative flex w-full md:justify-center ${
+                    isLeft ? "md:justify-start" : "md:justify-end"
+                  }`}
+                >
+                  {/* Dot */}
+                  <div 
+                    className="absolute -left-[30px] md:left-1/2 top-7 w-3 h-3 rounded-full -translate-x-1/2 z-10"
+                    style={{
+                      background: m.accent,
+                      boxShadow: `0 0 12px ${m.accent}80`,
+                    }}
+                  />
 
-                {/* Card */}
-                <div style={{
-                  width: "calc(50% - 36px)",
-                  background: "rgba(255,255,255,0.03)",
-                  border: `1px solid ${m.accent}30`,
-                  borderRadius: 16,
-                  padding: "20px 24px",
-                  textAlign: isLeft ? "right" : "left",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: isLeft ? "flex-end" : "flex-start", marginBottom: 8 }}>
-                    <span style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase",
-                      color: m.accent,
-                      background: `${m.accent}15`,
-                      border: `1px solid ${m.accent}30`,
-                      padding: "2px 10px",
-                      borderRadius: 999,
-                    }}>
-                      {m.type}
-                    </span>
-                    <span style={{ color: "#8B9CB8", fontSize: "0.8rem" }}>{m.year}</span>
+                  {/* Card */}
+                  <div 
+                    className={`w-full md:w-[calc(50%-36px)] bg-white/3 border border-${m.accent}/30 rounded-2xl p-6 text-left ${
+                      isLeft ? "md:text-right" : "md:text-left"
+                    }`}
+                    style={{
+                      borderColor: `${m.accent}30`
+                    }}
+                  >
+                    <div className={`flex items-center gap-3 mb-3 ${isLeft ? "md:justify-end" : "md:justify-start"}`}>
+                      <span className="text-[0.7rem] font-bold tracking-widest uppercase px-2.5 py-0.5 rounded-full border"
+                        style={{
+                          color: m.accent,
+                          background: `${m.accent}15`,
+                          borderColor: `${m.accent}30`,
+                        }}
+                      >
+                        {m.type}
+                      </span>
+                      <span className="text-slate-400 text-xs">{m.year}</span>
+                    </div>
+                    <h4 className="text-white font-semibold text-base mb-2">{m.title}</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed m-0">{m.desc}</p>
                   </div>
-                  <h4 style={{ color: "#fff", fontSize: "1.05rem", fontWeight: 600, marginBottom: 8 }}>{m.title}</h4>
-                  <p style={{ color: "#8B9CB8", fontSize: "0.875rem", lineHeight: 1.6, margin: 0 }}>{m.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

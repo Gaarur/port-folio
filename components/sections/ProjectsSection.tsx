@@ -173,13 +173,13 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
       }}
       style={{
         position: "sticky",
-        top: `calc(100px + ${i * 24}px)`,
+        top: `calc(88px + ${i * 24}px)`,
         background: p.bg,
         borderRadius: 24,
-        padding: "48px",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 40,
+        padding: "clamp(24px, 5vw, 48px)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
         alignItems: "center",
         border: "1px solid rgba(255,255,255,0.06)",
         overflow: "hidden",
@@ -189,6 +189,7 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
         boxShadow: `0 0 60px 0 ${p.accentColor}18`,
         transformStyle: "preserve-3d",
       }}
+      className="lg:grid lg:grid-cols-2 lg:gap-10"
     >
       {/* Background glow blob */}
       <div style={{
@@ -227,7 +228,7 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
         </p>
         <h3
           className="serif-heading"
-          style={{ fontSize: "1.85rem", color: "#fff", marginBottom: 20, whiteSpace: "pre-line" }}
+          style={{ fontSize: "clamp(1.5rem, 5vw, 1.85rem)", color: "#fff", marginBottom: 20, whiteSpace: "pre-line" }}
         >
           {p.headline}
         </h3>
@@ -240,12 +241,12 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
             </li>
           ))}
         </ul>
-        <div style={{ display: "flex", gap: 16 }}>
+        <div className="flex flex-wrap gap-4">
           <Link
             href={p.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
+            className="btn-primary flex-1 sm:flex-none text-center"
             style={{ fontSize: "0.85rem", padding: "10px 20px" }}
           >
             Live Site ↗
@@ -254,7 +255,7 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
             href={p.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline"
+            className="btn-outline flex-1 sm:flex-none text-center"
             style={{ fontSize: "0.85rem", padding: "9px 20px" }}
           >
             GitHub ↗
@@ -263,19 +264,22 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
       </div>
 
       {/* Mockup with translateZ */}
-      <div style={{
-        position: "relative",
-        background: p.mockupBg,
-        borderRadius: 20,
-        aspectRatio: "16/10",
-        border: "1px solid rgba(255,255,255,0.08)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "3rem",
-        boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-        transform: "translateZ(60px) rotateY(-5deg)",
-      }}>
+      <div 
+        className="w-full lg:w-auto"
+        style={{
+          position: "relative",
+          background: p.mockupBg,
+          borderRadius: 20,
+          aspectRatio: "16/10",
+          border: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "3rem",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+          transform: "translateZ(60px) rotateY(-5deg)",
+        }}
+      >
         {p.icon}
       </div>
     </motion.div>
@@ -375,20 +379,7 @@ export default function ProjectsSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                style={{
-                  marginTop: 80,
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                  gap: 24,
-                  position: "relative",
-                  zIndex: projects.length + 5,
-                  background: "#0D1929",
-                  padding: "40px 0 80px 0",
-                  margin: "0 -24px",
-                  paddingLeft: 24,
-                  paddingRight: 24,
-                  boxShadow: "0 -40px 40px #0D1929",
-                }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-[projects.length + 5] bg-[#0D1929] px-6 py-20 mt-20 -mx-6 shadow-[0_-40px_40px_#0D1929]"
               >
                 {otherProjects.map((p, i) => (
                   <motion.div

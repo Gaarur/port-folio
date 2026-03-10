@@ -41,11 +41,11 @@ export default function FaqSection() {
           </p>
           <h2
             className="serif-heading"
-            style={{ fontSize: "clamp(2rem, 5vw, 3rem)", color: "#fff", marginBottom: 12 }}
+            style={{ fontSize: "clamp(1.75rem, 6vw, 3rem)", color: "#fff", marginBottom: 12, lineHeight: 1.25 }}
           >
             Frequently Asked Questions
           </h2>
-          <p style={{ color: "#8B9CB8", fontSize: "0.95rem" }}>Your answers await right here</p>
+          <p style={{ color: "#8B9CB8", fontSize: "1rem" }}>Your answers await right here</p>
         </div>
 
         {/* Accordion */}

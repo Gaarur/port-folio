@@ -8,7 +8,7 @@ export default function AboutSection() {
   return (
     <section id="about" style={{ padding: "100px 0" }}>
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 64, alignItems: "center" }}>
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center lg:items-start text-center lg:text-left">
           {/* Left: narrative */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -42,14 +42,13 @@ export default function AboutSection() {
               at IIT Patna.
             </p>
 
-            {/* Stats row */}
-            <div style={{ display: "flex", gap: 40, marginBottom: 40 }}>
+            <div className="flex flex-wrap gap-8 justify-center lg:justify-start mb-10 mt-8">
               {[
                 { val: "2+", label: "Years experience" },
                 { val: "10+", label: "Projects built" },
                 { val: "97%", label: "Model accuracy" },
               ].map((s) => (
-                <div key={s.label}>
+                <div key={s.label} className="min-w-[100px]">
                   <div style={{ font: "700 2rem 'Playfair Display', serif", color: "#4ADE80", marginBottom: 4 }}>
                     {s.val}
                   </div>
@@ -58,18 +57,18 @@ export default function AboutSection() {
               ))}
             </div>
 
-            <a href="#contact" className="btn-outline" style={{ width: "fit-content" }}>
+            <a href="#contact" className="btn-outline inline-block">
               Know more →
             </a>
           </motion.div>
 
-          {/* Right: polaroid photo */}
+          {/* Right: polaroid photo & info */}
           <motion.div
             initial={{ opacity: 0, x: 30, rotate: -3 }}
             whileInView={{ opacity: 1, x: 0, rotate: 3 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: EASE }}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32 }}
+            className="flex flex-col items-center gap-8 w-full lg:max-w-[380px]"
           >
             {/* Polaroid */}
             <div
@@ -79,6 +78,7 @@ export default function AboutSection() {
                 borderRadius: 4,
                 boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
                 transform: "rotate(3deg)",
+                width: "100%",
                 maxWidth: 280,
               }}
             >
@@ -107,20 +107,12 @@ export default function AboutSection() {
             </div>
 
             {/* Info cards */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
+            <div className="flex flex-col gap-3 w-full">
               {[
                 { icon: "🎓", label: "M.Tech AI & Data Science", sub: "IIT Patna · 2024–2026" },
                 { icon: "📍", label: "Bihar, India", sub: "Open to remote · relocation" },
               ].map((c) => (
-                <div key={c.label} style={{
-                  background: "#131E2E",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: "14px 18px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                }}>
+                <div key={c.label} className="bg-[#131E2E] border border-white/7 rounded-2xl p-4 flex items-center gap-4 text-left">
                   <span style={{ fontSize: "1.3rem" }}>{c.icon}</span>
                   <div>
                     <p style={{ color: "#fff", fontWeight: 500, fontSize: "0.9rem", margin: 0 }}>{c.label}</p>

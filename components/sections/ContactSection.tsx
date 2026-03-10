@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/Garrur", icon: "⌥" },
@@ -135,9 +136,9 @@ export default function ContactSection() {
           <h2
             className="serif-heading"
             style={{
-              fontSize: "clamp(2.5rem, 7vw, 6rem)",
+              fontSize: "clamp(2rem, 8vw, 6rem)",
               color: "#fff",
-              lineHeight: 1.05,
+              lineHeight: 1.1,
               marginBottom: 32,
             }}
           >
@@ -152,7 +153,7 @@ export default function ContactSection() {
           </p>
 
           {/* CTA links */}
-          <div style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap", marginBottom: 60 }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a
               href="mailto:uraj33175@gmail.com"
               className="btn-primary"
@@ -172,13 +173,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact details */}
-          <div style={{
-            display: "flex",
-            gap: 48,
-            justifyContent: "center",
-            flexWrap: "wrap",
-            marginBottom: 60,
-          }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-center mb-16">
             <ContactItem label="Email" value="uraj33175@gmail.com" />
             <ContactItem label="Location" value="Patna, Bihar, India" />
             <ContactItem label="Availability" value="Open to opportunities" copyValue="none" />
@@ -224,32 +219,18 @@ export default function ContactSection() {
       </div>
 
       {/* Footer */}
-      <div style={{
-        marginTop: 80,
-        paddingTop: 32,
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: 12,
-        maxWidth: 1080,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingLeft: 24,
-        paddingRight: 24,
-      }}>
-        <p style={{ color: "#4A5A72", fontSize: "0.85rem", margin: 0 }}>
+      <div className="mt-20 pt-8 border-t border-white/6 flex flex-col md:flex-row items-center justify-between gap-6 max-w-[1080px] mx-auto px-6 pb-12">
+        <p className="text-[#4A5A72] text-sm m-0 text-center md:text-left">
           © 2025 Utkarsh Raj · Crafted with Next.js &amp; Framer Motion
         </p>
-        <div style={{ display: "flex", gap: 24 }}>
+        <div className="flex flex-wrap justify-center gap-6">
           {["About", "Projects", "Experience", "Contact"].map((l) => (
-            <a key={l} href={`#${l.toLowerCase()}`} style={{ color: "#4A5A72", fontSize: "0.85rem", textDecoration: "none" }}>
+            <a key={l} href={`#${l.toLowerCase()}`} className="text-[#4A5A72] text-sm no-underline hover:text-white transition-colors">
               {l}
             </a>
           ))}
         </div>
-        <a href="#top" style={{ color: "#4A5A72", fontSize: "0.85rem", textDecoration: "none" }}>
+        <a href="#top" className="text-[#4A5A72] text-sm no-underline hover:text-white transition-colors">
           ↑ Back to top
         </a>
       </div>

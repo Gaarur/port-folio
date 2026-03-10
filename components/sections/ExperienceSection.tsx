@@ -73,16 +73,17 @@ export default function ExperienceSection() {
             transition={{ duration: 1, ease: "easeInOut" }}
             style={{
               position: "absolute",
-              left: 20,
+              left: 14,
               top: 0,
               bottom: 0,
               width: 1,
               background: "linear-gradient(to bottom, #4ADE80, transparent)",
               transformOrigin: "top",
             }}
+            className="left-3.5 md:left-5"
           />
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 36, paddingLeft: 56 }}>
+          <div className="flex flex-col gap-9 pl-10 md:pl-14">
             {timeline.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -93,24 +94,21 @@ export default function ExperienceSection() {
                 style={{ position: "relative" }}
               >
                 {/* dot */}
-                <div style={{
-                  position: "absolute",
-                  left: -46,
-                  top: 6,
-                  width: 14,
-                  height: 14,
-                  borderRadius: "50%",
-                  background: typeColor[item.type] || "#4ADE80",
-                  border: "2px solid #0D1929",
-                  boxShadow: `0 0 0 3px ${typeColor[item.type]}33`,
-                }} />
+                <div 
+                  className="-left-[31px] md:-left-[46px]"
+                  style={{
+                    position: "absolute",
+                    top: 6,
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: typeColor[item.type] || "#4ADE80",
+                    border: "2px solid #0D1929",
+                    boxShadow: `0 0 0 3px ${typeColor[item.type]}33`,
+                  }} 
+                />
 
-                <div style={{
-                  background: "#111F33",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 16,
-                  padding: "24px 28px",
-                }}>
+                <div className="bg-[#111F33] border border-white/7 rounded-2xl p-6 md:p-7">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
                     <div>
                       <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "1.05rem", margin: "0 0 4px" }}>

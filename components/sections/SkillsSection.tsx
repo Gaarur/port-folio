@@ -57,86 +57,37 @@ export default function SkillsSection() {
         </div>
 
         {/* Bento grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
-          {/* Row 1: wide + narrow */}
-          {services.slice(0, 2).map((s, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {services.map((s, i) => (
             <motion.div
               key={s.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+              className={`rounded-3xl p-8 lg:p-10 flex flex-col gap-6 border border-white/7 ${
+                s.wide ? "md:col-span-2" : "md:col-span-1"
+              }`}
               style={{
                 background: s.bg,
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: 20,
-                padding: "36px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span style={{ fontSize: "1.4rem", color: "#4ADE80" }}>✦</span>
-                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "1.15rem", margin: 0 }}>{s.title}</h3>
+                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "1.25rem", margin: 0 }}>{s.title}</h3>
               </div>
-              <p style={{ color: "#8B9CB8", fontSize: "0.9rem", lineHeight: 1.65, margin: 0 }}>
+              <p style={{ color: "#8B9CB8", fontSize: "1rem", lineHeight: 1.65, margin: 0 }}>
                 {s.description}
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "auto" }}>
                 {s.tags.map((t) => (
                   <span key={t} style={{
-                    padding: "4px 12px",
+                    padding: "6px 14px",
                     borderRadius: 9999,
                     background: "rgba(74,222,128,0.08)",
                     border: "1px solid rgba(74,222,128,0.15)",
                     color: "#4ADE80",
-                    fontSize: "0.75rem",
-                    fontFamily: "monospace",
-                  }}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-
-          {/* Row 2: narrow + wide (reversed) */}
-          {services.slice(2).map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: (i + 2) * 0.1, ease: EASE }}
-              style={{
-                background: s.bg,
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: 20,
-                padding: "36px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-                gridColumn: i === 0 ? "2 / 3" : "1 / 2",
-                gridRow: 2,
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: "1.4rem", color: "#4ADE80" }}>✦</span>
-                <h3 style={{ color: "#fff", fontWeight: 600, fontSize: "1.15rem", margin: 0 }}>{s.title}</h3>
-              </div>
-              <p style={{ color: "#8B9CB8", fontSize: "0.9rem", lineHeight: 1.65, margin: 0 }}>
-                {s.description}
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "auto" }}>
-                {s.tags.map((t) => (
-                  <span key={t} style={{
-                    padding: "4px 12px",
-                    borderRadius: 9999,
-                    background: "rgba(74,222,128,0.08)",
-                    border: "1px solid rgba(74,222,128,0.15)",
-                    color: "#4ADE80",
-                    fontSize: "0.75rem",
+                    fontSize: "0.80rem",
                     fontFamily: "monospace",
                   }}>
                     {t}
