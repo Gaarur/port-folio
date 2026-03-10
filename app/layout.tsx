@@ -90,6 +90,7 @@ export default function RootLayout({
       </head>
       <body>
         <LenisProvider>
+          <div className="grain-overlay" aria-hidden="true" />
           <ScrollProgressBar />
           {children}
         </LenisProvider>

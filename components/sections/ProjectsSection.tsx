@@ -132,6 +132,156 @@ const otherProjects = [
   }
 ];
 
+function ProjectCard({ project: p, index: i }: { project: typeof projects[0], index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -12.5; // Up to 12.5 deg
+    const rotateY = ((x - centerX) / centerX) * 12.5;  // Up to 12.5 deg
+    setRotation({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setRotation({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ 
+        rotateX: rotation.x, 
+        rotateY: rotation.y,
+        scale: rotation.x !== 0 ? 1.015 : 1
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 100, 
+        damping: 30, 
+        opacity: { duration: 0.7, delay: i * 0.1 } 
+      }}
+      style={{
+        position: "sticky",
+        top: `calc(100px + ${i * 24}px)`,
+        background: p.bg,
+        borderRadius: 24,
+        padding: "48px",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 40,
+        alignItems: "center",
+        border: "1px solid rgba(255,255,255,0.06)",
+        overflow: "hidden",
+        minHeight: 280,
+        transformOrigin: "center",
+        zIndex: i,
+        boxShadow: `0 0 60px 0 ${p.accentColor}18`,
+        transformStyle: "preserve-3d",
+      }}
+    >
+      {/* Background glow blob */}
+      <div style={{
+        position: "absolute",
+        top: "-30%",
+        right: "-10%",
+        width: 400,
+        height: 400,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${p.accentColor}22 0%, transparent 70%)`,
+        pointerEvents: "none",
+        transform: "translateZ(20px)",
+      }} />
+      <div style={{
+        position: "absolute",
+        bottom: "-20%",
+        left: "10%",
+        width: 280,
+        height: 280,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${p.accentColor}12 0%, transparent 70%)`,
+        pointerEvents: "none",
+        transform: "translateZ(10px)",
+      }} />
+      {/* Content wrapper with translateZ for depth */}
+      <div style={{ transform: "translateZ(40px)" }}>
+        <p style={{
+          color: p.accentColor,
+          fontSize: "0.75rem",
+          fontWeight: 700,
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          marginBottom: 14,
+        }}>
+          {p.tag} · {p.year}
+        </p>
+        <h3
+          className="serif-heading"
+          style={{ fontSize: "1.85rem", color: "#fff", marginBottom: 20, whiteSpace: "pre-line" }}
+        >
+          {p.headline}
+        </h3>
+        <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.15)", marginBottom: 20 }} />
+        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px 0", display: "flex", flexDirection: "column", gap: 10 }}>
+          {p.bullets.map((b) => (
+            <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: 10, color: "#8B9CB8", fontSize: "0.9rem" }}>
+              <span style={{ color: p.accentColor, marginTop: 2 }}>✓</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+        <div style={{ display: "flex", gap: 16 }}>
+          <Link
+            href={p.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ fontSize: "0.85rem", padding: "10px 20px" }}
+          >
+            Live Site ↗
+          </Link>
+          <Link
+            href={p.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline"
+            style={{ fontSize: "0.85rem", padding: "9px 20px" }}
+          >
+            GitHub ↗
+          </Link>
+        </div>
+      </div>
+
+      {/* Mockup with translateZ */}
+      <div style={{
+        position: "relative",
+        background: p.mockupBg,
+        borderRadius: 20,
+        aspectRatio: "16/10",
+        border: "1px solid rgba(255,255,255,0.08)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "3rem",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+        transform: "translateZ(60px) rotateY(-5deg)",
+      }}>
+        {p.icon}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function ProjectsSection() {
   const [showAll, setShowAll] = useState(false);
   const resetTriggerRef = useRef<HTMLDivElement>(null);
@@ -176,135 +326,15 @@ export default function ProjectsSection() {
         </div>
 
         {/* Project panels */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, perspective: 1000 }}>
           {projects.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
-              style={{
-                position: "sticky",
-                top: `calc(100px + ${i * 24}px)`,
-                background: p.bg,
-                borderRadius: 24,
-                padding: "48px",
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 40,
-                alignItems: "center",
-                border: "1px solid rgba(255,255,255,0.06)",
-                overflow: "hidden",
-                minHeight: 280,
-                transformOrigin: "top",
-                zIndex: i,
-                boxShadow: `0 0 60px 0 ${p.accentColor}18`,
-              }}
-            >
-              {/* Background glow blob */}
-              <div style={{
-                position: "absolute",
-                top: "-30%",
-                right: "-10%",
-                width: 400,
-                height: 400,
-                borderRadius: "50%",
-                background: `radial-gradient(circle, ${p.accentColor}22 0%, transparent 70%)`,
-                pointerEvents: "none",
-              }} />
-              <div style={{
-                position: "absolute",
-                bottom: "-20%",
-                left: "10%",
-                width: 280,
-                height: 280,
-                borderRadius: "50%",
-                background: `radial-gradient(circle, ${p.accentColor}12 0%, transparent 70%)`,
-                pointerEvents: "none",
-              }} />
-              {/* Content */}
-              <div>
-                <p style={{
-                  color: p.accentColor,
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  marginBottom: 14,
-                }}>
-                  {p.tag} · {p.year}
-                </p>
-                <h3
-                  className="serif-heading"
-                  style={{ fontSize: "1.85rem", color: "#fff", marginBottom: 20, whiteSpace: "pre-line" }}
-                >
-                  {p.headline}
-                </h3>
-                <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.15)", marginBottom: 20 }} />
-                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px 0", display: "flex", flexDirection: "column", gap: 10 }}>
-                  {p.bullets.map((b) => (
-                    <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: 10, color: "#8B9CB8", fontSize: "0.9rem" }}>
-                      <span style={{ color: p.accentColor, marginTop: 2 }}>✓</span>
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
-                  {p.tech.map((t) => (
-                    <span key={t} style={{
-                      padding: "4px 12px",
-                      borderRadius: 9999,
-                      background: "rgba(255,255,255,0.07)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "#ccc",
-                      fontSize: "0.75rem",
-                    }}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div style={{ display: "flex", gap: 12 }}>
-                  <Link href={p.live} target="_blank" className="btn-card">
-                    View Live ↗
-                  </Link>
-                  <Link href={p.github} target="_blank" className="btn-outline" style={{ padding: "8px 20px", fontSize: "0.85rem" }}>
-                    Code
-                  </Link>
-                </div>
-              </div>
-
-              {/* Mockup panel */}
-              <div style={{
-                background: p.mockupBg,
-                borderRadius: 16,
-                height: 220,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid rgba(255,255,255,0.06)",
-                overflow: "hidden",
-                position: "relative",
-              }}>
-                <div style={{ textAlign: "center", padding: 24 }}>
-                  <div style={{
-                    fontSize: "3rem",
-                    marginBottom: 12,
-                  }}>
-                    {p.icon}
-                  </div>
-                  <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem", fontFamily: "monospace" }}>
-                    {p.title}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+            <ProjectCard key={p.title} project={p} index={i} />
           ))}
 
           {/* View More Overlay at the end of scroll */}
           {!showAll && (
             <div style={{
-              marginTop: 120, // push it down so the user can see the last card before it covers it
+              marginTop: 120,
               padding: "100px 0 60px",
               display: "flex",
               justifyContent: "center",
@@ -313,7 +343,7 @@ export default function ProjectsSection() {
               background: "linear-gradient(to bottom, rgba(13,25,41,0) 0%, rgba(13,25,41,0.8) 40%, #0D1929 100%)",
               backdropFilter: "blur(8px)",
               WebkitBackdropFilter: "blur(8px)",
-              margin: "0 -24px", // extend past padding if needed
+              margin: "0 -24px",
             }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -352,12 +382,12 @@ export default function ProjectsSection() {
                   gap: 24,
                   position: "relative",
                   zIndex: projects.length + 5,
-                  background: "#0D1929", // the dark app background
+                  background: "#0D1929",
                   padding: "40px 0 80px 0",
-                  margin: "0 -24px", // to expand past container bounds for full bleed background
+                  margin: "0 -24px",
                   paddingLeft: 24,
                   paddingRight: 24,
-                  boxShadow: "0 -40px 40px #0D1929", // blend into the top
+                  boxShadow: "0 -40px 40px #0D1929",
                 }}
               >
                 {otherProjects.map((p, i) => (

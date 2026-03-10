@@ -83,6 +83,51 @@ function TypewriterLine() {
   );
 }
 
+const TECH_BADGES = [
+  { label: "React",       color: "#61DAFB", top: "8%",  left: "62%" },
+  { label: "Python",      color: "#FFD34E", top: "22%", left: "15%" },
+  { label: "Next.js",     color: "#FFFFFF", top: "68%", left: "18%" },
+  { label: "TensorFlow",  color: "#FF8A65", top: "72%", left: "65%" },
+  { label: "TypeScript",  color: "#3B82F6", top: "12%", left: "78%" },
+  { label: "FastAPI",     color: "#4ADE80", top: "55%", left: "82%" },
+];
+
+function FloatingBadge({ badge, delay }: { badge: typeof TECH_BADGES[0], delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ 
+        opacity: [0.7, 1, 0.7],
+        y: [0, -10, 0],
+        x: [0, 5, 0],
+        scale: [1, 1.05, 1]
+      }}
+      transition={{ 
+        duration: 4, 
+        repeat: Infinity, 
+        delay,
+        ease: "easeInOut" 
+      }}
+      className="absolute hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border"
+      style={{ 
+        top: badge.top, 
+        left: badge.left,
+        backgroundColor: `${badge.color}10`,
+        borderColor: `${badge.color}30`,
+        color: badge.color,
+        fontSize: "0.75rem",
+        fontWeight: 600,
+        zIndex: 5,
+        backdropFilter: "blur(4px)",
+        boxShadow: `0 0 20px ${badge.color}15`,
+      }}
+    >
+      <span style={{ width: 6, height: 6, borderRadius: "50%", background: badge.color }} />
+      {badge.label}
+    </motion.div>
+  );
+}
+
 export default function HeroSection() {
   return (
     <section
@@ -98,6 +143,11 @@ export default function HeroSection() {
       {/* Scattered sparkles */}
       {SPARKLES.map((s, i) => (
         <Sparkle key={i} style={{ top: s.top, left: s.left }} delay={s.delay} size={s.size} />
+      ))}
+
+      {/* Floating Tech Badges */}
+      {TECH_BADGES.map((badge, i) => (
+        <FloatingBadge key={badge.label} badge={badge} delay={i * 0.2} />
       ))}
 
       {/* Content */}
