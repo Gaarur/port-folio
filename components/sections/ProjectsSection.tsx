@@ -199,8 +199,30 @@ export default function ProjectsSection() {
                 minHeight: 280,
                 transformOrigin: "top",
                 zIndex: i,
+                boxShadow: `0 0 60px 0 ${p.accentColor}18`,
               }}
             >
+              {/* Background glow blob */}
+              <div style={{
+                position: "absolute",
+                top: "-30%",
+                right: "-10%",
+                width: 400,
+                height: 400,
+                borderRadius: "50%",
+                background: `radial-gradient(circle, ${p.accentColor}22 0%, transparent 70%)`,
+                pointerEvents: "none",
+              }} />
+              <div style={{
+                position: "absolute",
+                bottom: "-20%",
+                left: "10%",
+                width: 280,
+                height: 280,
+                borderRadius: "50%",
+                background: `radial-gradient(circle, ${p.accentColor}12 0%, transparent 70%)`,
+                pointerEvents: "none",
+              }} />
               {/* Content */}
               <div>
                 <p style={{
