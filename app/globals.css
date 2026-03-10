@@ -1,0 +1,373 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Color Palette ── */
+  --color-background: #0D1929;
+  --color-surface: #111F33;
+  --color-card: #0F1C2E;
+  --color-card-alt: #131E2E;
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #8B9CB8;
+  --color-text-tertiary: #4A5A72;
+
+  /* Accents */
+  --color-accent: #4ADE80;
+  --color-accent-lime: #B5FF4D;
+  --color-accent-dim: rgba(74, 222, 128, 0.15);
+  --color-neon-cyan: #00FFF0;
+  --color-neon-green: #4ADE80;
+  --color-project-a: #1A3A2E;
+  --color-project-b: #1E2A3A;
+  --color-project-c: #2A1E3A;
+
+  /* Fonts */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Animations */
+  --animate-marquee: marquee 25s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 25s linear infinite;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-sparkle: sparkle 2s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-75%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes sparkle {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2) rotate(15deg);
+    }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/* ── Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+body {
+  background-color: #0D1929;
+  color: #FFFFFF;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0D1929;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4ADE80;
+  border-radius: 9999px;
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(74, 222, 128, 0.25);
+  color: #fff;
+}
+
+/* ── Hero ring glow ── */
+.hero-ring {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 40%, rgba(74, 222, 128, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-ring-border {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 1px solid rgba(74, 222, 128, 0.12);
+  pointer-events: none;
+}
+
+.hero-ring-border-2 {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  width: 680px;
+  height: 680px;
+  border-radius: 50%;
+  border: 1px solid rgba(74, 222, 128, 0.05);
+  pointer-events: none;
+}
+
+/* ── Glass card ── */
+.glass {
+  background: rgba(17, 31, 51, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Sparkle ── */
+.sparkle {
+  display: inline-block;
+  animation: sparkle 2.5s ease-in-out infinite;
+  color: #4ADE80;
+}
+
+/* ── Section label ── */
+.section-label {
+  color: #4ADE80;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── Serif heading ── */
+.serif-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* ── Pill button ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  background: #fff;
+  color: #0D1929;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 9999px;
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Lime marquee ── */
+.marquee-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: marquee 120s linear infinite;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE RESPONSIVE STYLES
+   breakpoints: 768px (tablet), 480px (mobile)
+   ───────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+  /* Sections */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero section */
+  .hero-ring-border,
+  .hero-ring-border-2 {
+    display: none;
+  }
+
+  /* Projects - switch to single column card */
+  #projects [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Timeline – stack vertically */
+  #timeline [style*="display: flex"] {
+    justify-content: flex-start !important;
+  }
+
+  #timeline [style*="width: calc(50%"] {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  #timeline [style*="left: 50%; top: 0; bottom: 0"] {
+    left: 16px !important;
+    transform: none !important;
+  }
+
+  #timeline [style*="left: 50%; top: 20"] {
+    left: 16px !important;
+    transform: none !important;
+  }
+
+  /* Contact section */
+  #contact [style*="gap: 48"] {
+    gap: 28px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Skills grid */
+  #skills [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Navbar */
+  nav [style*="gap: 32"] {
+    gap: 12px !important;
+  }
+
+  /* Buttons */
+  .btn-primary,
+  .btn-outline,
+  .btn-card {
+    padding: 10px 18px !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Headings */
+  .serif-heading {
+    font-size: clamp(1.6rem, 8vw, 2.4rem) !important;
+  }
+
+  /* Project cards padding */
+  #projects [style*="padding: 48px"] {
+    padding: 28px 20px !important;
+  }
+
+  /* About / Experience cards */
+  [style*="padding: 32px"] {
+    padding: 20px 16px !important;
+  }
+
+  /* View More extra projects */
+  #projects [style*="grid-template-columns: repeat(auto-fit, minmax(300px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
