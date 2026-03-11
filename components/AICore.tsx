@@ -54,34 +54,36 @@ function NeuralBrain() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={500}
-            array={useMemo(() => {
-              const positions = new Float32Array(500 * 3);
-              for (let i = 0; i < 500; i++) {
-                const r = 2.5 + Math.random() * 1.5;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.random() * Math.PI;
-                positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-                positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-                positions[i * 3 + 2] = r * Math.cos(phi);
-              }
-              return positions;
-            }, [])}
-            itemSize={3}
+            args={[
+              useMemo(() => {
+                const positions = new Float32Array(500 * 3);
+                for (let i = 0; i < 500; i++) {
+                  const r = 2.5 + Math.random() * 1.5;
+                  const theta = Math.random() * Math.PI * 2;
+                  const phi = Math.random() * Math.PI;
+                  positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                  positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                  positions[i * 3 + 2] = r * Math.cos(phi);
+                }
+                return positions;
+              }, []),
+              3,
+            ]}
           />
           <bufferAttribute
             attach="attributes-color"
-            count={500}
-            array={useMemo(() => {
-              const colors = new Float32Array(500 * 3);
-              for (let i = 0; i < 500; i++) {
-                colors[i * 3] = 0.06; // R
-                colors[i * 3 + 1] = 0.72; // G
-                colors[i * 3 + 2] = 0.50; // B
-              }
-              return colors;
-            }, [])}
-            itemSize={3}
+            args={[
+              useMemo(() => {
+                const colors = new Float32Array(500 * 3);
+                for (let i = 0; i < 500; i++) {
+                  colors[i * 3] = 0.06; // R
+                  colors[i * 3 + 1] = 0.72; // G
+                  colors[i * 3 + 2] = 0.50; // B
+                }
+                return colors;
+              }, []),
+              3,
+            ]}
           />
         </bufferGeometry>
       </Points>
