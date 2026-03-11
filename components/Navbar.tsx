@@ -110,7 +110,7 @@ export default function Navbar() {
           </button>
 
           <Link
-            href="#contact"
+            href="/contact"
             className="hidden sm:flex"
             style={{
               marginLeft: "6px",
@@ -130,7 +130,7 @@ export default function Navbar() {
           
           {/* Small mobile "Let's talk" (icon only or smaller) */}
           <Link
-            href="#contact"
+            href="/contact"
             className="flex sm:hidden items-center justify-center"
             style={{
               width: 40,
@@ -201,7 +201,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="#contact"
+              href="/contact"
               onClick={() => setIsOpen(false)}
               style={{
                 marginTop: 8,

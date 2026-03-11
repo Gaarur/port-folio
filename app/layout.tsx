@@ -4,6 +4,7 @@ import "./globals.css";
 import { LenisProvider } from "@/components/LenisProvider";
 import { Analytics } from "@vercel/analytics/react";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
+import Loader from "@/components/Loader";
 
 
 const inter = Inter({
@@ -90,6 +91,7 @@ export default function RootLayout({
       </head>
       <body>
         <LenisProvider>
+          <Loader />
           <div className="grain-overlay" aria-hidden="true" />
           <ScrollProgressBar />
           {children}

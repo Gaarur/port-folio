@@ -154,13 +154,13 @@ export default function ContactSection() {
 
           {/* CTA links */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <a
-              href="mailto:uraj33175@gmail.com"
+            <Link
+              href="/contact"
               className="btn-primary"
               style={{ fontSize: "1.05rem", padding: "16px 36px" }}
             >
               Say Hello ✉️
-            </a>
+            </Link>
             <a
               href="https://github.com/Garrur"
               target="_blank"
