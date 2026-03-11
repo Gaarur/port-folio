@@ -13,7 +13,7 @@ interface Repo {
   updated_at: string;
 }
 
-const EASE = [0.21, 0.47, 0.32, 0.98];
+const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 export default function GitHubSection() {
   const [repos, setRepos] = useState<Repo[]>([]);
