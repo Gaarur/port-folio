@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import TechAura from "@/components/TechAura";
 
 const TYPEWRITER_WORDS = [
   "AI Systems",
@@ -152,33 +153,33 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center flex flex-col items-center">
-        {/* Avatar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-6 relative"
-          style={{ animation: "float 4s ease-in-out infinite" }}
-        >
-          <div
-            style={{
-              width: 88,
-              height: 88,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              borderRadius: "50%",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src="/avatar.png"
-              alt="Utkarsh Raj"
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
+        {/* Avatar with 3D AI Core Background */}
+        <div className="mb-8 relative flex items-center justify-center w-full max-w-[400px]">
+          {/* Technical Tech Aura Background */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[380px] md:h-[380px] -z-10 opacity-70">
+            <Suspense fallback={null}>
+              <TechAura />
+            </Suspense>
           </div>
-        </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div
+              className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-emerald-500/20 p-0.5 bg-[#030712] overflow-hidden flex items-center justify-center"
+              style={{ animation: "float 4s ease-in-out infinite" }}
+            >
+              <img
+                src="/avatar.png"
+                alt="Utkarsh Raj"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+          </motion.div>
+        </div>
 
         {/* Status badge */}
         <motion.div
