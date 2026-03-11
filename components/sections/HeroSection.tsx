@@ -142,85 +142,20 @@ function FloatingBadge({ badge, delay, active }: { badge: typeof TECH_BADGES[0],
   );
 }
 
-function StrikeSystem() {
+function OrbitSystem() {
   const [target, setTarget] = useState<number | null>(null);
-
-  // Helper to parse "62%" -> 62
-  const parsePos = (pos: string) => parseFloat(pos.replace("%", ""));
-
-  // Generate a heartbeat (ECG) path from start to end
-  const generateHeartbeat = (x1: number, y1: number, x2: number, y2: number) => {
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    
-    // Normal vector for spikes
-    const nx = -dy / dist;
-    const ny = dx / dist;
-
-    // Rhythmic segments (percentage along line, peak height)
-    const points = [
-      { p: 0, h: 0 },
-      { p: 0.25, h: 0 },
-      { p: 0.28, h: -0.8 }, // P wave start
-      { p: 0.32, h: 0.8 },  // P wave peak
-      { p: 0.36, h: 0 },    // P wave end
-      { p: 0.42, h: 0 },
-      { p: 0.45, h: -1.2 }, // Q spike
-      { p: 0.50, h: 6.5 },  // R spike (Very high)
-      { p: 0.55, h: -2.0 }, // S spike
-      { p: 0.60, h: 0 },
-      { p: 0.70, h: 1.2 },  // T wave peak
-      { p: 0.80, h: 0 },
-      { p: 1, h: 0 },
-    ];
-
-    return points.map((pt, i) => {
-      const px = x1 + dx * pt.p + nx * pt.h;
-      const py = y1 + dy * pt.p + ny * pt.h;
-      return `${i === 0 ? "M" : "L"} ${px.toFixed(2)} ${py.toFixed(2)}`;
-    }).join(" ");
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * TECH_BADGES.length);
       setTarget(randomIndex);
-      setTimeout(() => setTarget(null), 1000);
-    }, 4000);
+      setTimeout(() => setTarget(null), 1200);
+    }, 4500);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-20">
-      <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {target !== null && (
-          <motion.path
-            key={target}
-            d={generateHeartbeat(50, 22, parsePos(TECH_BADGES[target].left), parsePos(TECH_BADGES[target].top))}
-            stroke={TECH_BADGES[target].color}
-            strokeWidth="0.22"
-            fill="transparent"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            style={{ filter: `drop-shadow(0 0 2px ${TECH_BADGES[target].color})` }}
-          />
-        )}
-        {/* Glow at strike point */}
-        <Suspense fallback={null}>
-          {target !== null && (
-            <motion.circle
-              initial={{ r: 0, opacity: 0 }}
-              animate={{ r: [0, 4.5, 0], opacity: [0, 0.5, 0] }}
-              cx={parsePos(TECH_BADGES[target].left)}
-              cy={parsePos(TECH_BADGES[target].top)}
-              fill={TECH_BADGES[target].color}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            />
-          )}
-        </Suspense>
-      </svg>
       {TECH_BADGES.map((badge, i) => (
         <FloatingBadge key={badge.label} badge={badge} delay={i * 0.2} active={target === i} />
       ))}
@@ -245,8 +180,8 @@ export default function HeroSection() {
         <Sparkle key={i} style={{ top: s.top, left: s.left }} delay={s.delay} size={s.size} />
       ))}
 
-      {/* Floating Tech Badges & Pulse System */}
-      <StrikeSystem />
+      {/* Floating Tech Badges Orbit */}
+      <OrbitSystem />
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center flex flex-col items-center">
