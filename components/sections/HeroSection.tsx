@@ -91,6 +91,11 @@ const TECH_BADGES = [
   { label: "TensorFlow",  color: "#FF8A65", top: "72%", left: "65%" },
   { label: "TypeScript",  color: "#3B82F6", top: "12%", left: "78%" },
   { label: "FastAPI",     color: "#4ADE80", top: "55%", left: "82%" },
+  { label: "PyTorch",     color: "#EE4C2C", top: "40%", left: "10%" },
+  { label: "Docker",      color: "#2496ED", top: "15%", left: "38%" },
+  { label: "PostgreSQL",  color: "#336791", top: "85%", left: "45%" },
+  { label: "LangChain",   color: "#12B188", top: "35%", left: "88%" },
+  { label: "Node.js",     color: "#339933", top: "82%", left: "82%" },
 ];
 
 function FloatingBadge({ badge, delay }: { badge: typeof TECH_BADGES[0], delay: number }) {
