@@ -1,157 +1,230 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const timeline = [
+const experience = [
   {
-    period: "2024 — 2026",
-    title: "M.Tech in AI & Data Science",
+    period: "2024 – 2026",
     org: "IIT Patna",
-    location: "Patna, Bihar",
+    role: "M.Tech — AI & Data Science",
+    type: "Education",
     description:
-      "Advanced studies in artificial intelligence, machine learning, and data science. Research focus on multimodal AI systems and real-time inference optimisation.",
-    tags: ["Deep Learning", "NLP", "Computer Vision", "Research"],
-    type: "education",
-    accent: "#E8FF4D",
+      "Pursuing advanced research in multimodal AI systems, real-time inference optimisation, and large language models. Active contributor to the academic AI community.",
+    highlights: ["Multimodal AI research", "Real-time inference", "LLM fine-tuning"],
   },
   {
-    period: "Jan 2024 — May 2024",
-    title: "Web Developer",
-    org: "Infowiz",
-    location: "Remote",
+    period: "2025",
+    org: "Self-Directed",
+    role: "Multimodal Surveillance AI System",
+    type: "Project",
     description:
-      "Engineered responsive web applications within an agile team. Designed and consumed robust REST APIs. Achieved timely delivery of enterprise features by continuously integrating backend services with frontend architectures.",
-    tags: ["React.js", "Node.js", "Next.js", "Tailwind CSS"],
-    type: "work",
-    accent: "#FF5C35",
+      "Designed and deployed a production-grade AI surveillance platform with <50ms end-to-end latency. Combined DETR, ViT, CLIP, and FAISS in a unified real-time pipeline.",
+    highlights: ["DETR + FAISS pipeline", "<50ms latency", "Production deployment"],
   },
   {
-    period: "2020 — 2024",
-    title: "B.Tech in Computer Engineering",
-    org: "I.K. Gujral Punjab Technical University",
-    location: "Punjab, India",
+    period: "2024",
+    org: "Research",
+    role: "Brain Tumor CNN Classifier",
+    type: "Research",
     description:
-      "Graduated with 7.5 CGPA. Built foundational knowledge in software engineering, data structures, algorithms, and full-stack development.",
-    tags: ["DSA", "DBMS", "Software Engineering", "Web Dev"],
-    type: "education",
-    accent: "#C8FF8C",
+      "Developed a Sequential CNN model for clinical-grade brain tumour classification from MRI images. Achieved 97.3% accuracy. Adopted by 200+ medical students.",
+    highlights: ["97.3% accuracy", "Data augmentation", "200+ adopters"],
+  },
+  {
+    period: "2023",
+    org: "Open Source",
+    role: "AI Career Coaching Platform",
+    type: "Product",
+    description:
+      "Built a full-stack ML-driven career platform with NLP-based skill gap analysis, Clerk auth, NeonDB, and Inngest event queues. Deployed and maintained on Vercel.",
+    highlights: ["Skill gap NLP", "Event-driven arch", "Vercel production"],
+  },
+  {
+    period: "2023",
+    org: "Open Source",
+    role: "StudyNotion — LMS Platform",
+    type: "Product",
+    description:
+      "Architected a full MERN stack ed-tech platform with JWT authentication, Razorpay payment integration, Cloudinary media, and a real-time analytics dashboard.",
+    highlights: ["MERN stack", "Razorpay integration", "Analytics dashboard"],
+  },
+  {
+    period: "2020 – 2024",
+    org: "I.K Gujral Punjab Technical University",
+    role: "B.Tech — Computer Engineering",
+    type: "Education",
+    description:
+      "Completed undergraduate studies with a strong foundation in computer engineering, data structures, and algorithms.",
+    highlights: ["Core Computing", "Software Engineering", "Algorithms"],
   },
 ];
 
-const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
+const typeColors: Record<string, { bg: string; color: string }> = {
+  Education: { bg: "#F5DCD9", color: "#A44A3F" },
+  Project:   { bg: "#E0E5CC", color: "#6B705C" },
+  Product:   { bg: "#F7EDDE", color: "#5D4A2E" },
+  Research:  { bg: "#F5DCD9", color: "#A44A3F" },
+};
 
 export default function ExperienceSection() {
-  return (
-    <section id="experience" style={{ padding: "100px 0", background: "#0A0A0A", position: "relative" }}>
-      {/* Glow */}
-      <div style={{
-        position: "absolute", top: "30%", right: "5%",
-        width: 350, height: 350, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(255,92,53,0.05) 0%, transparent 70%)",
-        filter: "blur(60px)", pointerEvents: "none",
-      }} />
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px" }}>
-        {/* Header */}
-        <div style={{ marginBottom: 56 }}>
-          <p className="section-label" style={{ marginBottom: 12 }}>MY&nbsp;JOURNEY</p>
-          <h2 className="editorial-heading" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", color: "#F0EDE8" }}>
-            Experience &amp; Milestones
-          </h2>
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.08 }
+    );
+    sectionRef.current?.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      id="experience"
+      ref={sectionRef}
+      style={{ padding: "120px 0", background: "#F1EDE7" }}
+    >
+      <div className="container-editorial">
+        <p className="label-section reveal" style={{ marginBottom: 20 }}>Experience & Achievements</p>
+        <h2
+          className="reveal"
+          style={{
+            fontFamily: '"Playfair Display", Georgia, serif',
+            fontWeight: 800,
+            fontSize: "clamp(2rem, 4vw, 3rem)",
+            letterSpacing: "-0.025em",
+            color: "#1A1A1A",
+            lineHeight: 1.1,
+            marginBottom: 64,
+          }}
+        >
+          A timeline of<br />
+          <em style={{ color: "#A44A3F" }}>meaningful work.</em>
+        </h2>
 
         {/* Timeline */}
-        <div style={{ position: "relative" }}>
-          {/* Vertical line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            style={{
-              position: "absolute", left: 14, top: 0, bottom: 0,
-              width: 1, transformOrigin: "top",
-              background: "linear-gradient(to bottom, #E8FF4D60, transparent)",
-            }}
-            className="left-3.5 md:left-5"
-          />
-
-          <div className="flex flex-col gap-8 pl-10 md:pl-14">
-            {timeline.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
-                style={{ position: "relative" }}
-              >
-                {/* Dot */}
-                <div
-                  className="-left-[31px] md:-left-[46px]"
-                  style={{
-                    position: "absolute", top: 18,
-                    width: 12, height: 12, borderRadius: "50%",
-                    background: item.accent,
-                    border: "2px solid #0A0A0A",
-                    boxShadow: `0 0 0 3px ${item.accent}30, 0 0 12px ${item.accent}50`,
-                  }}
-                />
-
-                {/* Card */}
-                <div style={{
-                  background: "rgba(255,255,255,0.03)",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                  border: `1px solid ${item.accent}15`,
-                  borderRadius: 16, padding: "22px 24px",
-                  transition: "border-color 0.3s ease",
+        <div>
+          {experience.map((item, i) => {
+            const tc = typeColors[item.type] || typeColors["Project"];
+            return (
+              <div
+                key={i}
+                className="reveal"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "160px 1fr",
+                  gap: "40px",
+                  padding: "40px 0",
+                  borderTop: "1px solid #D4CDBE",
+                  ...(i === experience.length - 1 ? { borderBottom: "1px solid #D4CDBE" } : {}),
                 }}
-                  onMouseEnter={(e) => (e.currentTarget as HTMLDivElement).style.borderColor = `${item.accent}30`}
-                  onMouseLeave={(e) => (e.currentTarget as HTMLDivElement).style.borderColor = `${item.accent}15`}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
-                    <div>
-                      <h3 className="editorial-heading" style={{ color: "#F0EDE8", fontSize: "1rem", margin: "0 0 4px" }}>
-                        {item.title}
-                      </h3>
-                      <p style={{ color: item.accent, fontSize: "0.80rem", margin: 0, fontWeight: 600, letterSpacing: "-0.01em" }}>
-                        {item.org} · {item.location}
-                      </p>
-                    </div>
-                    <span style={{
-                      color: "#6B6762", fontSize: "0.68rem",
-                      fontFamily: "JetBrains Mono, monospace", whiteSpace: "nowrap",
-                      padding: "3px 10px", borderRadius: 4,
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                    }}>
-                      {item.period}
-                    </span>
-                  </div>
+              >
+                {/* Left: period + type */}
+                <div style={{ paddingTop: 4 }}>
+                  <p
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.80rem",
+                      fontWeight: 600,
+                      color: "#1A1A1A",
+                      marginBottom: 10,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {item.period}
+                  </p>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "3px 9px",
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.63rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      background: tc.bg,
+                      color: tc.color,
+                      borderRadius: 2,
+                    }}
+                  >
+                    {item.type}
+                  </span>
+                </div>
 
-                  <p style={{ color: "#6B6762", fontSize: "0.85rem", lineHeight: 1.65, margin: "10px 0 14px", letterSpacing: "-0.01em" }}>
+                {/* Right: content */}
+                <div>
+                  <p
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.72rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "#A89F9B",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {item.org}
+                  </p>
+                  <h3
+                    style={{
+                      fontFamily: '"Playfair Display", Georgia, serif',
+                      fontWeight: 700,
+                      fontSize: "1.25rem",
+                      color: "#1A1A1A",
+                      letterSpacing: "-0.015em",
+                      marginBottom: 14,
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {item.role}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.875rem",
+                      color: "#3D3835",
+                      lineHeight: 1.75,
+                      marginBottom: 18,
+                    }}
+                  >
                     {item.description}
                   </p>
 
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                    {item.tags.map((t) => (
-                      <span key={t} style={{
-                        padding: "3px 10px", borderRadius: 4,
-                        background: `${item.accent}0D`, border: `1px solid ${item.accent}20`,
-                        color: item.accent, fontSize: "0.68rem",
-                        fontFamily: "JetBrains Mono, monospace",
-                      }}>
-                        {t}
+                  {/* Highlights */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    {item.highlights.map((h) => (
+                      <span
+                        key={h}
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.72rem",
+                          fontWeight: 500,
+                          color: "#6B705C",
+                          background: "#E0E5CC",
+                          borderRadius: 2,
+                          padding: "3px 10px",
+                        }}
+                      >
+                        {h}
                       </span>
                     ))}
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          .reveal[style*="grid-template-columns: 160px"] {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

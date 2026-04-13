@@ -1,124 +1,220 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const services = [
+const skillGroups = [
   {
-    icon: "◈",
-    title: "AI & Machine Learning",
-    description: "Building production-ready ML systems — from model training to real-time inference pipelines.",
-    tags: ["PyTorch", "TensorFlow", "FAISS", "LangChain", "OpenCV"],
-    accent: "#E8FF4D",
-    wide: true,
+    category: "AI / ML",
+    color: "#A44A3F",
+    bg: "#F5DCD9",
+    skills: ["Python", "PyTorch", "TensorFlow", "Keras", "FAISS", "LangChain", "OpenAI API", "CLIP", "DETR", "ViT", "SentenceTransformers", "Flan-T5"],
   },
   {
-    icon: "◎",
-    title: "Full-Stack Development",
-    description: "End-to-end web applications with modern React, Next.js, and scalable backends.",
-    tags: ["Next.js", "Node.js", "FastAPI", "PostgreSQL", "TypeScript"],
-    accent: "#FF5C35",
-    wide: false,
+    category: "Web Engineering",
+    color: "#6B705C",
+    bg: "#E0E5CC",
+    skills: ["Next.js", "React.js", "TypeScript", "Node.js", "Express", "FastAPI", "REST APIs", "WebSockets", "Tailwind CSS"],
   },
   {
-    icon: "◉",
-    title: "Research & Prototyping",
-    description: "Rapid prototyping and research-backed development for novel AI applications.",
-    tags: ["Jupyter", "HuggingFace", "Scikit-learn"],
-    accent: "#FF8C6A",
-    wide: false,
+    category: "Data & Databases",
+    color: "#5D4A2E",
+    bg: "#F7EDDE",
+    skills: ["PostgreSQL", "MongoDB", "NeonDB", "Prisma", "Redis", "Vector DBs"],
   },
   {
-    icon: "◐",
-    title: "Cloud & DevOps",
-    description: "Containerised deployments, CI/CD pipelines, and cloud-native architecture for production systems.",
-    tags: ["Docker", "AWS", "Vercel", "GitHub Actions", "Linux"],
-    accent: "#C8FF8C",
-    wide: true,
+    category: "Tools & Infrastructure",
+    color: "#6B705C",
+    bg: "#E0E5CC",
+    skills: ["Docker", "Git", "GitHub Actions", "Vercel", "Cloudinary", "Inngest", "Clerk", "Razorpay"],
   },
 ];
 
-const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
-
 export default function SkillsSection() {
-  return (
-    <section id="skills" style={{ padding: "100px 0", background: "#0A0A0A", position: "relative" }}>
-      {/* Ambient glow */}
-      <div style={{
-        position: "absolute", bottom: "10%", right: "10%",
-        width: 500, height: 300, borderRadius: "50%",
-        background: "radial-gradient(ellipse, rgba(255,92,53,0.05) 0%, transparent 70%)",
-        filter: "blur(60px)", pointerEvents: "none",
-      }} />
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
-        {/* Header */}
-        <div style={{ marginBottom: 56 }}>
-          <p className="section-label" style={{ marginBottom: 12 }}>WHAT&nbsp;I&nbsp;DO</p>
-          <h2 className="editorial-heading" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", color: "#F0EDE8" }}>
-            My Expertise
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.1 }
+    );
+    sectionRef.current?.querySelectorAll(".reveal, .reveal-left").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      id="skills"
+      ref={sectionRef}
+      style={{ padding: "120px 0", background: "#F5F1EB" }}
+    >
+      <div className="container-editorial">
+        <p className="label-section reveal" style={{ marginBottom: 20 }}>Technical Skills</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 64,
+            flexWrap: "wrap",
+            gap: 20,
+          }}
+        >
+          <h2
+            className="reveal"
+            style={{
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontWeight: 800,
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+              letterSpacing: "-0.025em",
+              color: "#1A1A1A",
+              lineHeight: 1.1,
+            }}
+          >
+            The tools I work<br />
+            <em style={{ color: "#A44A3F" }}>with every day.</em>
           </h2>
+          <p
+            className="reveal"
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.90rem",
+              color: "#7A6E6A",
+              maxWidth: 280,
+              lineHeight: 1.7,
+            }}
+          >
+            Spanning research to production — grouped by domain.
+          </p>
         </div>
 
-        {/* Bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          {services.map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-              className={`rounded-2xl p-7 lg:p-9 flex flex-col gap-5 ${s.wide ? "md:col-span-2" : "md:col-span-1"}`}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: `1px solid ${s.accent}18`,
-                boxShadow: `0 0 40px ${s.accent}08`,
-                transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-                cursor: "default",
-              }}
-              whileHover={{
-                borderColor: `${s.accent}30`,
-                boxShadow: `0 0 60px ${s.accent}12`,
-              }}
-            >
-              {/* Icon + Title */}
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{
-                  fontSize: "1.4rem", color: s.accent, lineHeight: 1,
-                  fontWeight: 400, letterSpacing: "-0.05em",
-                }}>
-                  {s.icon}
+        {/* Skill groups */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "48px 80px",
+          }}
+          className="skills-grid"
+        >
+          {skillGroups.map((group) => (
+            <div key={group.category} className="reveal">
+              {/* Category heading */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  marginBottom: 20,
+                  paddingBottom: 14,
+                  borderBottom: "1px solid #D4CDBE",
+                }}
+              >
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: group.color,
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: "0.70rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: group.color,
+                  }}
+                >
+                  {group.category}
                 </span>
-                <h3 className="editorial-heading" style={{ color: "#F0EDE8", fontSize: "1.15rem", margin: 0 }}>
-                  {s.title}
-                </h3>
               </div>
 
-              {/* Description */}
-              <p style={{ color: "#6B6762", fontSize: "0.9rem", lineHeight: 1.65, margin: 0, letterSpacing: "-0.01em" }}>
-                {s.description}
-              </p>
-
-              {/* Tags */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: "auto" }}>
-                {s.tags.map((t) => (
-                  <span key={t} style={{
-                    padding: "4px 10px", borderRadius: 4,
-                    background: `${s.accent}0D`, border: `1px solid ${s.accent}20`,
-                    color: s.accent, fontSize: "0.68rem",
-                    fontFamily: "JetBrains Mono, monospace", fontWeight: 500,
-                    letterSpacing: "0.04em",
-                  }}>
-                    {t}
+              {/* Skills chips */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {group.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      padding: "6px 14px",
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.80rem",
+                      fontWeight: 500,
+                      color: "#3D3835",
+                      background: "#F1EDE7",
+                      border: "1px solid #D4CDBE",
+                      borderRadius: 2,
+                      transition: "background 0.15s, border-color 0.15s, color 0.15s",
+                      cursor: "default",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLSpanElement;
+                      el.style.background = group.bg;
+                      el.style.borderColor = group.color;
+                      el.style.color = group.color;
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLSpanElement;
+                      el.style.background = "#F1EDE7";
+                      el.style.borderColor = "#D4CDBE";
+                      el.style.color = "#3D3835";
+                    }}
+                  >
+                    {skill}
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom note */}
+        <div
+          style={{
+            marginTop: 64,
+            paddingTop: 32,
+            borderTop: "1px solid #D4CDBE",
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+          }}
+          className="reveal"
+        >
+          <span
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.78rem",
+              color: "#A89F9B",
+              letterSpacing: "0.05em",
+            }}
+          >
+            Always learning ·
+          </span>
+          {["Rust", "Kubernetes", "MLOps", "Triton Inference Server"].map((s) => (
+            <span
+              key={s}
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "0.78rem",
+                color: "#6B705C",
+                fontStyle: "italic",
+              }}
+            >
+              {s}
+            </span>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .skills-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
     </section>
   );
 }
