@@ -19,30 +19,36 @@ export default function CustomCursor() {
     const moveCursor = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      dot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
     };
 
     const animateRing = () => {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.transform = `translate(${ringX - 16}px, ${ringY - 16}px)`;
       requestAnimationFrame(animateRing);
     };
 
     const handleHover = () => {
-      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(2.5)`;
-      ring.style.opacity = "0.4";
-      ring.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px) scale(1.5)`;
+      dot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px) scale(2)`;
+      dot.style.backgroundColor = "#FF5C35"; // Turn orange on hover
+      ring.style.opacity = "0.15";
+      ring.style.scale = "1.5";
+      ring.style.borderColor = "#FF5C35";
     };
 
     const handleLeave = () => {
-      ring.style.opacity = "0.6";
+      dot.style.backgroundColor = "#E8FF4D";
+      dot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px) scale(1)`;
+      ring.style.opacity = "0.3";
+      ring.style.scale = "1";
+      ring.style.borderColor = "rgba(232,255,77,0.5)";
     };
 
     window.addEventListener("mousemove", moveCursor);
     animateRing();
 
-    const interactives = document.querySelectorAll("a, button, [data-cursor]");
+    const interactives = document.querySelectorAll("a, button, [data-cursor], .clickable");
     interactives.forEach((el) => {
       el.addEventListener("mouseenter", handleHover);
       el.addEventListener("mouseleave", handleLeave);
@@ -54,19 +60,19 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <>
-      {/* Dot */}
+    <div className="hidden lg:block">
+      {/* Central Dot - Acid Yellow */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-neon-cyan z-[9999] pointer-events-none transition-transform duration-75"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#E8FF4D] z-[10000] pointer-events-none transition-transform duration-75 mix-blend-difference"
         style={{ willChange: "transform" }}
       />
-      {/* Ring */}
+      {/* Follower Ring - Subtle Acid Yellow */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-neon-cyan/60 z-[9998] pointer-events-none opacity-60"
-        style={{ willChange: "transform", transition: "opacity 0.3s ease" }}
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#E8FF4D]/50 z-[9999] pointer-events-none opacity-30 transition-[opacity,scale,border-color] duration-300"
+        style={{ willChange: "transform" }}
       />
-    </>
+    </div>
   );
 }

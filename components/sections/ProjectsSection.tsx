@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const projects = [
@@ -18,10 +18,9 @@ const projects = [
     tech: ["FastAPI", "PyTorch", "FAISS", "Next.js", "Docker"],
     github: "https://github.com/Garrur/MULTI_MODEL",
     live: "https://multi-model-nu.vercel.app/",
-    bg: "#1A3A2E",
-    accentColor: "#4ADE80",
-    mockupBg: "#0F2A1E",
-    icon: "📹"
+    accentColor: "#E8FF4D",
+    icon: "📹",
+    colSpan: 7,
   },
   {
     tag: "FULL STACK AI",
@@ -31,15 +30,14 @@ const projects = [
     bullets: [
       "Scalable event-driven backend using NeonDB & Inngest",
       "Dynamic skill gap analysis via NLP algorithms",
-      "Secure authentication & session management with Clerk",
+      "Secure authentication with Clerk & session management",
     ],
     tech: ["Next.js", "NeonDB", "Prisma", "Inngest", "OpenAI"],
     github: "https://github.com/Garrur/AI-Career",
     live: "https://ai-career-pearl.vercel.app/",
-    bg: "#1A2B3A",
-    accentColor: "#60A5FA",
-    mockupBg: "#0F1A2E",
-    icon: "💼"
+    accentColor: "#FF5C35",
+    icon: "💼",
+    colSpan: 5,
   },
   {
     tag: "FULL STACK",
@@ -48,16 +46,15 @@ const projects = [
     headline: "Comprehensive MERN\nEd-Tech ecosystem",
     bullets: [
       "RESTful Node.js backend with JWT & Razorpay integration",
-      "Optimized React client with Cloudinary media streaming",
+      "Optimised React client with Cloudinary media streaming",
       "Real-time student analytics & enrollment dashboard",
     ],
     tech: ["React.js", "Node.js", "Express", "MongoDB"],
     github: "https://github.com/Garrur/Study",
     live: "https://study-rouge-three.vercel.app/",
-    bg: "#3A2A1E",
-    accentColor: "#FBBF24",
-    mockupBg: "#2E1A0F",
-    icon: "📚"
+    accentColor: "#FF8C6A",
+    icon: "📚",
+    colSpan: 5,
   },
   {
     tag: "DEEP LEARNING",
@@ -65,91 +62,43 @@ const projects = [
     title: "Brain Tumor AI Classifier",
     headline: "CNN-based MRI scanner\nwith 97.3% accuracy",
     bullets: [
-      "High-precision diagnostic model utilizing Sequential CNN",
-      "Optimized generalization via data augmentation & Dropout",
+      "High-precision diagnostic model utilising Sequential CNN",
+      "Optimised generalisation via data augmentation & Dropout",
       "Used by 200+ medical students as an open-source model",
     ],
     tech: ["TensorFlow", "Keras", "CNN", "Python"],
     github: "https://github.com/Garrur/Brain-Tumor",
     live: "https://brain-tumor-sepia.vercel.app/",
-    bg: "#2A1E3A",
-    accentColor: "#A78BFA",
-    mockupBg: "#1E102E",
-    icon: "🧠"
-  }
+    accentColor: "#C8FF8C",
+    icon: "🧠",
+    colSpan: 7,
+  },
+];
+
+const otherProjects = [
+  { title: "JobPilot",             desc: "Job portal platform",                   live: "https://jobpilot-sable.vercel.app",      github: "" },
+  { title: "Invoicess",            desc: "Invoice management system",             live: "https://invoicess-two.vercel.app",        github: "" },
+  { title: "Study Classes",        desc: "LMS and classes platform",              live: "https://classes-ecru-ten.vercel.app/",   github: "" },
+  { title: "Floor Plan",           desc: "Interactive floor planning tool",       live: "https://floor-plan-mu.vercel.app/",      github: "" },
+  { title: "Hospi",                desc: "Hospital management system",            live: "https://hospi-tan.vercel.app/",          github: "" },
+  { title: "Multi-Tenant Platform",desc: "Scalable multi-tenant architecture",    live: "",                                        github: "https://github.com/Garrur/Multi-Tenant-Platform" },
+  { title: "AccessWorld",          desc: "Accessibility focused tool",            live: "",                                        github: "https://github.com/Garrur/AcessWorld" },
+  { title: "SEnseAI",              desc: "AI-powered sensor data analysis",       live: "",                                        github: "https://github.com/Garrur/SEnseAI" },
 ];
 
 const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
-const otherProjects = [
-  {
-    title: "JobPilot",
-    desc: "Job portal platform",
-    live: "https://jobpilot-sable.vercel.app",
-    github: ""
-  },
-  {
-    title: "Invoicess",
-    desc: "Invoice management system",
-    live: "https://invoicess-two.vercel.app",
-    github: ""
-  },
-  {
-    title: "Study Classes",
-    desc: "LMS and classes platform",
-    live: "https://classes-ecru-ten.vercel.app/",
-    github: ""
-  },
-  {
-    title: "Floor Plan",
-    desc: "Interactive floor planning tool",
-    live: "https://floor-plan-mu.vercel.app/",
-    github: ""
-  },
-  {
-    title: "Hospi",
-    desc: "Hospital management system",
-    live: "https://hospi-tan.vercel.app/",
-    github: ""
-  },
-  {
-    title: "Multi-Tenant Platform",
-    desc: "Scalable multi-tenant architecture",
-    live: "",
-    github: "https://github.com/Garrur/Multi-Tenant-Platform"
-  },
-  {
-    title: "AccessWorld",
-    desc: "Accessibility focused tool",
-    live: "",
-    github: "https://github.com/Garrur/AcessWorld"
-  },
-  {
-    title: "SEnseAI",
-    desc: "AI-powered sensor data analysis",
-    live: "",
-    github: "https://github.com/Garrur/SEnseAI"
-  }
-];
-
-function ProjectCard({ project: p, index: i }: { project: typeof projects[0], index: number }) {
+function ProjectCard({ project: p, index: i }: { project: typeof projects[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -12.5; // Up to 12.5 deg
-    const rotateY = ((x - centerX) / centerX) * 12.5;  // Up to 12.5 deg
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const rotateX = ((y - rect.height / 2) / rect.height) * -8;
+    const rotateY = ((x - rect.width  / 2) / rect.width)  *  8;
     setRotation({ x: rotateX, y: rotateY });
-  };
-
-  const handleMouseLeave = () => {
-    setRotation({ x: 0, y: 0 });
   };
 
   return (
@@ -159,126 +108,111 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      animate={{ 
-        rotateX: rotation.x, 
-        rotateY: rotation.y,
-        scale: rotation.x !== 0 ? 1.015 : 1
-      }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 100, 
-        damping: 30, 
-        opacity: { duration: 0.7, delay: i * 0.1 } 
-      }}
+      onMouseLeave={() => setRotation({ x: 0, y: 0 })}
+      animate={{ rotateX: rotation.x, rotateY: rotation.y, scale: rotation.x !== 0 ? 1.01 : 1 }}
+      transition={{ type: "spring", stiffness: 100, damping: 30, opacity: { duration: 0.7, delay: i * 0.1 } }}
+      className="relative lg:grid lg:grid-cols-2 lg:gap-10 lg:sticky"
       style={{
-        background: p.bg,
-        borderRadius: 24,
-        padding: "clamp(24px, 5vw, 48px)",
+        background: "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderRadius: 20,
+        padding: "clamp(24px, 5vw, 44px)",
         display: "flex",
         flexDirection: "column",
-        gap: "24px",
+        gap: 24,
         alignItems: "center",
-        border: "1px solid rgba(255,255,255,0.06)",
+        border: `1px solid ${p.accentColor}18`,
         overflow: "hidden",
         minHeight: 280,
         transformOrigin: "center",
         zIndex: i,
-        boxShadow: `0 0 60px 0 ${p.accentColor}18`,
+        boxShadow: `0 0 60px 0 ${p.accentColor}10, 0 20px 40px rgba(0,0,0,0.4)`,
         transformStyle: "preserve-3d",
-        // Pass the index as a CSS variable for the sticky top calculation in Tailwind
         // @ts-ignore
         "--index": i,
+        top: `calc(88px + ${i * 24}px)`,
       } as React.CSSProperties}
-      className="relative lg:sticky lg:top-[calc(88px+var(--index)*24px)] lg:grid lg:grid-cols-2 lg:gap-10"
     >
-      {/* Background glow blob */}
+      {/* Glow blob */}
       <div style={{
-        position: "absolute",
-        top: "-30%",
-        right: "-10%",
-        width: 400,
-        height: 400,
-        borderRadius: "50%",
-        background: `radial-gradient(circle, ${p.accentColor}22 0%, transparent 70%)`,
+        position: "absolute", top: "-30%", right: "-10%",
+        width: 400, height: 400, borderRadius: "50%",
+        background: `radial-gradient(circle, ${p.accentColor}15 0%, transparent 70%)`,
         pointerEvents: "none",
-        transform: "translateZ(20px)",
       }} />
-      <div style={{
-        position: "absolute",
-        bottom: "-20%",
-        left: "10%",
-        width: 280,
-        height: 280,
-        borderRadius: "50%",
-        background: `radial-gradient(circle, ${p.accentColor}12 0%, transparent 70%)`,
-        pointerEvents: "none",
-        transform: "translateZ(10px)",
-      }} />
-      {/* Content wrapper with translateZ for depth */}
-      <div style={{ transform: "translateZ(40px)" }}>
-        <p style={{
-          color: p.accentColor,
-          fontSize: "0.75rem",
-          fontWeight: 700,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          marginBottom: 14,
-        }}>
-          {p.tag} · {p.year}
-        </p>
+
+      {/* Content */}
+      <div style={{ transform: "translateZ(30px)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+          <span style={{
+            padding: "3px 10px", borderRadius: 4, fontSize: "0.68rem",
+            fontWeight: 700, fontFamily: "JetBrains Mono, monospace",
+            letterSpacing: "0.12em", textTransform: "uppercase",
+            background: `${p.accentColor}18`, border: `1px solid ${p.accentColor}30`,
+            color: p.accentColor,
+          }}>
+            {p.tag}
+          </span>
+          <span style={{ fontSize: "0.68rem", color: "#6B6762", fontFamily: "JetBrains Mono, monospace" }}>
+            {p.year}
+          </span>
+        </div>
+
         <h3
-          className="serif-heading"
-          style={{ fontSize: "clamp(1.5rem, 5vw, 1.85rem)", color: "#fff", marginBottom: 20, whiteSpace: "pre-line" }}
+          className="editorial-heading"
+          style={{ fontSize: "clamp(1.4rem, 4vw, 1.75rem)", color: "#F0EDE8", marginBottom: 20, whiteSpace: "pre-line" }}
         >
           {p.headline}
         </h3>
-        <div style={{ width: 40, height: 1, background: "rgba(255,255,255,0.15)", marginBottom: 20 }} />
-        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px 0", display: "flex", flexDirection: "column", gap: 10 }}>
+
+        <div style={{ width: 32, height: 2, background: `${p.accentColor}40`, marginBottom: 18 }} />
+
+        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 24px 0", display: "flex", flexDirection: "column", gap: 8 }}>
           {p.bullets.map((b) => (
-            <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: 10, color: "#8B9CB8", fontSize: "0.9rem" }}>
-              <span style={{ color: p.accentColor, marginTop: 2 }}>✓</span>
+            <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: 10, color: "#9C9890", fontSize: "0.875rem", lineHeight: 1.5 }}>
+              <span style={{ color: p.accentColor, marginTop: 2, fontWeight: 700 }}>✓</span>
               {b}
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            href={p.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary flex-1 sm:flex-none text-center"
-            style={{ fontSize: "0.85rem", padding: "10px 20px" }}
-          >
-            Live Site ↗
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 24 }}>
+          {p.tech.map((t) => (
+            <span key={t} style={{
+              padding: "4px 10px", borderRadius: 4,
+              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)",
+              color: "#9C9890", fontSize: "0.68rem", fontFamily: "JetBrains Mono, monospace",
+            }}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          <Link href={p.live} target="_blank" rel="noopener noreferrer"
+            className="btn-neu" style={{ fontSize: "0.82rem", padding: "9px 18px" }}>
+            Live ↗
           </Link>
-          <Link
-            href={p.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline flex-1 sm:flex-none text-center"
-            style={{ fontSize: "0.85rem", padding: "9px 20px" }}
-          >
+          <Link href={p.github} target="_blank" rel="noopener noreferrer"
+            className="btn-neu-outline" style={{ fontSize: "0.82rem", padding: "9px 18px" }}>
             GitHub ↗
           </Link>
         </div>
       </div>
 
-      {/* Mockup with translateZ */}
-      <div 
+      {/* Mockup */}
+      <div
         className="w-full lg:w-auto"
         style={{
           position: "relative",
-          background: p.mockupBg,
-          borderRadius: 20,
+          background: "rgba(255,255,255,0.02)",
+          borderRadius: 14,
           aspectRatio: "16/10",
-          border: "1px solid rgba(255,255,255,0.08)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "3rem",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-          transform: "translateZ(60px) rotateY(-5deg)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "3.5rem",
+          transform: "translateZ(40px) rotateY(-4deg)",
         }}
       >
         {p.icon}
@@ -289,43 +223,37 @@ function ProjectCard({ project: p, index: i }: { project: typeof projects[0], in
 
 export default function ProjectsSection() {
   const [showAll, setShowAll] = useState(false);
-  const resetTriggerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  // Reset when the entire Projects section leaves the viewport
+
   useEffect(() => {
     if (!showAll) return;
-    
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
-      const isOutOfView = rect.bottom < 0 || rect.top > window.innerHeight;
-      if (isOutOfView) {
-        setShowAll(false);
-      }
+      if (rect.bottom < 0 || rect.top > window.innerHeight) setShowAll(false);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [showAll]);
 
   return (
-    <section id="projects" ref={sectionRef} style={{ padding: "100px 0", position: "relative" }}>
-      {/* Invisible trigger div at the very top */}
-      <div ref={resetTriggerRef} style={{ position: "absolute", top: 0, height: 10, width: "100%" }} />
+    <section id="projects" ref={sectionRef} style={{ padding: "100px 0", position: "relative", background: "#0A0A0A" }}>
+      {/* Ambient glow */}
+      <div style={{
+        position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
+        width: 800, height: 400, borderRadius: "50%",
+        background: "radial-gradient(ellipse, rgba(232,255,77,0.04) 0%, transparent 70%)",
+        pointerEvents: "none", filter: "blur(60px)",
+      }} />
+
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
-          <p className="section-label" style={{ marginBottom: 12 }}>
-            C U R A T E D &nbsp; W O R K
-          </p>
-          <h2
-            className="serif-heading"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", color: "#fff", marginBottom: 14 }}
-          >
+        <div style={{ marginBottom: 64 }}>
+          <p className="section-label" style={{ marginBottom: 12 }}>CURATED&nbsp;WORK</p>
+          <h2 className="editorial-heading" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", color: "#F0EDE8", marginBottom: 14 }}>
             Featured Case Studies
           </h2>
-          <p style={{ color: "#8B9CB8", fontSize: "1rem", maxWidth: 480, margin: "0 auto" }}>
+          <p style={{ color: "#6B6762", fontSize: "0.95rem", maxWidth: 440, letterSpacing: "-0.01em" }}>
             Compilation of projects that reflect my engineering & AI expertise
           </p>
         </div>
@@ -336,18 +264,14 @@ export default function ProjectsSection() {
             <ProjectCard key={p.title} project={p} index={i} />
           ))}
 
-          {/* View More Overlay at the end of scroll */}
+          {/* View More overlay */}
           {!showAll && (
             <div style={{
-              marginTop: 120,
-              padding: "100px 0 60px",
-              display: "flex",
-              justifyContent: "center",
-              position: "relative",
-              zIndex: projects.length + 1,
-              background: "linear-gradient(to bottom, rgba(13,25,41,0) 0%, rgba(13,25,41,0.8) 40%, #0D1929 100%)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
+              marginTop: 80, padding: "100px 0 60px",
+              display: "flex", justifyContent: "center",
+              position: "relative", zIndex: projects.length + 1,
+              background: "linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,0.85) 40%, #0A0A0A 100%)",
+              backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
               margin: "0 -24px",
             }}>
               <motion.div
@@ -356,31 +280,22 @@ export default function ProjectsSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <button 
-                  onClick={() => setShowAll(true)}
-                  className="btn-primary"
-                  style={{
-                    fontSize: "1.1rem",
-                    padding: "16px 40px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-                    border: "none",
-                    cursor: "pointer"
-                  }}
-                >
+                <button onClick={() => setShowAll(true)} className="btn-neu"
+                  style={{ fontSize: "1rem", padding: "14px 36px" }}>
                   View More Projects ↗
                 </button>
               </motion.div>
             </div>
           )}
 
-          {/* Expanded Projects Grid */}
+          {/* Expanded grid */}
           <AnimatePresence>
             {showAll && (
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative bg-[#0D1929] px-6 py-20 mt-20 -mx-6 shadow-[0_-40px_40px_#0D1929]"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative px-0 py-16 mt-16"
                 style={{ zIndex: projects.length + 5 }}
               >
                 {otherProjects.map((p, i) => (
@@ -390,39 +305,29 @@ export default function ProjectsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
                     style={{
-                      background: "rgba(255, 255, 255, 0.03)",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
-                      borderRadius: 16,
-                      padding: 24,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 16,
-                      transition: "all 0.3s ease",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: 14,
+                      padding: 22,
+                      display: "flex", flexDirection: "column", gap: 14,
+                      transition: "all 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255, 255, 255, 0.05)";
-                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(74, 222, 128, 0.3)";
+                      (e.currentTarget as HTMLDivElement).style.background = "rgba(232,255,77,0.04)";
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(232,255,77,0.18)";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255, 255, 255, 0.03)";
-                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255, 255, 255, 0.08)";
+                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)";
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.06)";
                     }}
                   >
                     <div>
-                      <h4 style={{ color: "#fff", fontSize: "1.25rem", marginBottom: 8, fontWeight: 600 }}>{p.title}</h4>
-                      <p style={{ color: "#8B9CB8", fontSize: "0.95rem", margin: 0 }}>{p.desc}</p>
+                      <h4 className="editorial-heading" style={{ color: "#F0EDE8", fontSize: "1.1rem", marginBottom: 6 }}>{p.title}</h4>
+                      <p style={{ color: "#6B6762", fontSize: "0.875rem", margin: 0 }}>{p.desc}</p>
                     </div>
-                    <div style={{ marginTop: "auto", display: "flex", gap: 12 }}>
-                      {p.live && (
-                        <Link href={p.live} target="_blank" className="btn-card" style={{ padding: "8px 16px", fontSize: "0.85rem" }}>
-                          View Live ↗
-                        </Link>
-                      )}
-                      {p.github && (
-                        <Link href={p.github} target="_blank" className="btn-outline" style={{ padding: "7px 16px", fontSize: "0.85rem" }}>
-                          Code
-                        </Link>
-                      )}
+                    <div style={{ marginTop: "auto", display: "flex", gap: 10 }}>
+                      {p.live   && <Link href={p.live}   target="_blank" className="btn-neu"         style={{ padding: "7px 14px", fontSize: "0.78rem" }}>Live ↗</Link>}
+                      {p.github && <Link href={p.github} target="_blank" className="btn-neu-outline" style={{ padding: "7px 14px", fontSize: "0.78rem" }}>Code</Link>}
                     </div>
                   </motion.div>
                 ))}

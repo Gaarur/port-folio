@@ -22,10 +22,10 @@ function GeometricRings() {
 
   return (
     <group>
-      {/* Primary Inner Ring (Dashed) */}
+      {/* Primary Inner Ring (Dashed) - Acid Yellow */}
       <group ref={ring1Ref}>
         <Ring args={[1.6, 1.62, 64]} rotation={[Math.PI / 2.2, 0, 0]}>
-          <meshBasicMaterial color="#10b981" transparent opacity={0.3} wireframe />
+          <meshBasicMaterial color="#E8FF4D" transparent opacity={0.2} wireframe />
         </Ring>
         {/* Dash Markers */}
         {[...Array(12)].map((_, i) => (
@@ -35,22 +35,22 @@ function GeometricRings() {
             0
           ]}>
             <boxGeometry args={[0.05, 0.2, 0.01]} />
-            <meshBasicMaterial color="#10b981" transparent opacity={0.5} />
+            <meshBasicMaterial color="#E8FF4D" transparent opacity={0.4} />
           </mesh>
         ))}
       </group>
 
-      {/* Middle Orbit Ring */}
+      {/* Middle Orbit Ring - Warm Orange */}
       <group ref={ring2Ref}>
         <Ring args={[2.2, 2.21, 128]} rotation={[Math.PI / 4, Math.PI / 6, 0]}>
-          <meshBasicMaterial color="#3b82f6" transparent opacity={0.15} />
+          <meshBasicMaterial color="#FF5C35" transparent opacity={0.12} />
         </Ring>
       </group>
 
-      {/* Large Outer Perimeter */}
+      {/* Large Outer Perimeter - Mint / Yellow */}
       <group ref={ring3Ref}>
         <Ring args={[3, 3.01, 128]} rotation={[-Math.PI / 6, 0, 0]}>
-          <meshBasicMaterial color="#10b981" transparent opacity={0.1} />
+          <meshBasicMaterial color="#C8FF8C" transparent opacity={0.08} />
         </Ring>
       </group>
     </group>
@@ -71,9 +71,21 @@ function PlexusField() {
         positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
         positions[i * 3 + 2] = r * Math.cos(phi);
         
-        colorArr[i * 3] = 0.06; // R
-        colorArr[i * 3 + 1] = 0.72; // G
-        colorArr[i * 3 + 2] = 0.50; // B
+        // Randomly pick between Acid Yellow, Orange, and Mint for particles
+        const rand = Math.random();
+        if (rand > 0.7) {
+            colorArr[i * 3] = 1.0;     // FF
+            colorArr[i * 3 + 1] = 0.36; // 5C
+            colorArr[i * 3 + 2] = 0.21; // 35
+        } else if (rand > 0.4) {
+            colorArr[i * 3] = 0.91;     // E8
+            colorArr[i * 3 + 1] = 1.0;  // FF
+            colorArr[i * 3 + 2] = 0.30; // 4D
+        } else {
+            colorArr[i * 3] = 0.78;     // C8
+            colorArr[i * 3 + 1] = 1.0;  // FF
+            colorArr[i * 3 + 2] = 0.55; // 8C
+        }
     }
     return { positions, colorArr };
   }, []);
@@ -95,7 +107,7 @@ function PlexusField() {
         sizeAttenuation={true}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
-        opacity={0.4}
+        opacity={0.35}
       />
     </Points>
   );
@@ -110,12 +122,12 @@ export default function TechAura() {
         dpr={[1, 2]}
       >
         <ambientLight intensity={0.4} />
-        <pointLight position={[5, 5, 5]} intensity={0.8} color="#10b981" />
+        <pointLight position={[5, 5, 5]} intensity={0.8} color="#E8FF4D" />
         
         <GeometricRings />
         <PlexusField />
         
-        <fog attach="fog" args={["#030712", 5, 12]} />
+        <fog attach="fog" args={["#0A0A0A", 5, 12]} />
       </Canvas>
     </div>
   );

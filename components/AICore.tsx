@@ -23,20 +23,20 @@ function NeuralBrain() {
 
   return (
     <group>
-      {/* Core Pulsing Sphere */}
+      {/* Core Pulsing Sphere - Acid Yellow / Orange */}
       <Float speed={2} rotationIntensity={1} floatIntensity={2}>
         <Sphere ref={meshRef} args={[1, 64, 64]}>
           <MeshDistortMaterial
-            color="#10b981"
+            color="#E8FF4D"
             speed={4}
             distort={0.4}
             radius={1}
-            emissive="#10b981"
-            emissiveIntensity={0.5}
-            roughness={0}
-            metalness={1}
+            emissive="#E8FF4D"
+            emissiveIntensity={0.3}
+            roughness={0.1}
+            metalness={0.9}
             transparent
-            opacity={0.8}
+            opacity={0.85}
           />
         </Sphere>
       </Float>
@@ -76,9 +76,17 @@ function NeuralBrain() {
               useMemo(() => {
                 const colors = new Float32Array(500 * 3);
                 for (let i = 0; i < 500; i++) {
-                  colors[i * 3] = 0.06; // R
-                  colors[i * 3 + 1] = 0.72; // G
-                  colors[i * 3 + 2] = 0.50; // B
+                  // Mix of Acid Yellow and Orange
+                  const isOrange = Math.random() > 0.7;
+                  if (isOrange) {
+                    colors[i * 3] = 1.0;     // R (FF)
+                    colors[i * 3 + 1] = 0.36; // G (5C)
+                    colors[i * 3 + 2] = 0.21; // B (35)
+                  } else {
+                    colors[i * 3] = 0.91;     // R (E8)
+                    colors[i * 3 + 1] = 1.0;  // G (FF)
+                    colors[i * 3 + 2] = 0.30; // B (4D)
+                  }
                 }
                 return colors;
               }, []),
@@ -99,9 +107,9 @@ export default function AICore() {
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
       >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#4ADE80" />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#3B82F6" />
+        <ambientLight intensity={0.4} />
+        <pointLight position={[10, 10, 10]} intensity={1} color="#E8FF4D" />
+        <pointLight position={[-10, -10, -10]} intensity={1} color="#FF5C35" />
         
         <NeuralBrain />
         
@@ -109,12 +117,12 @@ export default function AICore() {
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         
         {/* Subtle Background particles */}
-        <fog attach="fog" args={["#030712", 5, 15]} />
+        <fog attach="fog" args={["#0A0A0A", 5, 15]} />
       </Canvas>
       
-      {/* HUD overlays */}
-      <div className="absolute inset-0 border border-emerald-500/10 rounded-full scale-110 animate-[pulse_4s_infinite] pointer-events-none" />
-      <div className="absolute inset-0 border border-blue-500/10 rounded-full scale-125 animate-[pulse_6s_infinite] pointer-events-none" />
+      {/* HUD overlays - matching new theme */}
+      <div className="absolute inset-0 border border-[#E8FF4D]/10 rounded-full scale-110 animate-[pulse_4s_infinite] pointer-events-none" />
+      <div className="absolute inset-0 border border-[#FF5C35]/10 rounded-full scale-125 animate-[pulse_6s_infinite] pointer-events-none" />
     </div>
   );
 }

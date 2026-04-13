@@ -27,24 +27,24 @@ export default function ParticleField() {
     renderer.setClearColor(0x000000, 0);
     mount.appendChild(renderer.domElement);
 
-    // Particles
-    const particleCount = 1800;
+    // Particles - Warm Palette (Acid Yellow, Orange, Mint)
+    const particleCount = 1200; // Reduced for performance and cleaner look
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const neonColors = [
-      new THREE.Color("#00FFF0"),
-      new THREE.Color("#BF5AF2"),
-      new THREE.Color("#0A84FF"),
-      new THREE.Color("#B5FFD9"),
+    const curatorColors = [
+      new THREE.Color("#E8FF4D"), // Acid Yellow
+      new THREE.Color("#FF5C35"), // Burnt Orange
+      new THREE.Color("#C8FF8C"), // Mint
+      new THREE.Color("#F0EDE8"), // Warm White
     ];
 
     for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 12;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 8;
+      positions[i * 3] = (Math.random() - 0.5) * 15;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
 
-      const color = neonColors[Math.floor(Math.random() * neonColors.length)];
+      const color = curatorColors[Math.floor(Math.random() * curatorColors.length)];
       colors[i * 3] = color.r;
       colors[i * 3 + 1] = color.g;
       colors[i * 3 + 2] = color.b;
@@ -55,34 +55,34 @@ export default function ParticleField() {
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.025,
+      size: 0.02,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.4,
       sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Icosahedron wireframe in center
-    const icoGeo = new THREE.IcosahedronGeometry(1.2, 1);
+    // Central Wireframe - Geometric Focus
+    const icoGeo = new THREE.IcosahedronGeometry(1.5, 1);
     const icoMat = new THREE.MeshBasicMaterial({
-      color: 0x00fff0,
+      color: 0xE8FF4D,
       wireframe: true,
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.04,
     });
     const ico = new THREE.Mesh(icoGeo, icoMat);
     scene.add(ico);
 
-    // Inner solid
-    const innerGeo = new THREE.IcosahedronGeometry(0.9, 0);
+    // Inner Core Glow
+    const innerGeo = new THREE.SphereGeometry(0.8, 16, 16);
     const innerMat = new THREE.MeshBasicMaterial({
-      color: 0xbf5af2,
-      wireframe: true,
+      color: 0xFF5C35,
       transparent: true,
-      opacity: 0.06,
+      opacity: 0.02,
     });
     const inner = new THREE.Mesh(innerGeo, innerMat);
     scene.add(inner);
@@ -104,17 +104,14 @@ export default function ParticleField() {
       animId = requestAnimationFrame(animate);
       const elapsed = (performance.now() - startTime) / 1000;
 
-      particles.rotation.y = elapsed * 0.04 + mouseX * 0.1;
-      particles.rotation.x = elapsed * 0.02 + mouseY * 0.05;
+      particles.rotation.y = elapsed * 0.03 + mouseX * 0.05;
+      particles.rotation.x = elapsed * 0.015 + mouseY * 0.02;
 
-      ico.rotation.y = elapsed * 0.15;
-      ico.rotation.x = elapsed * 0.1;
+      ico.rotation.y = elapsed * 0.1;
+      ico.rotation.z = elapsed * 0.05;
 
-      inner.rotation.y = -elapsed * 0.2;
-      inner.rotation.z = elapsed * 0.08;
-
-      camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
-      camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
+      camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.01;
+      camera.position.y += (-mouseY * 0.3 - camera.position.y) * 0.01;
 
       renderer.render(scene, camera);
     };
@@ -136,19 +133,23 @@ export default function ParticleField() {
       cancelAnimationFrame(animId);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      mount.removeChild(renderer.domElement);
+      if (mount.contains(renderer.domElement)) {
+        mount.removeChild(renderer.domElement);
+      }
       renderer.dispose();
       geometry.dispose();
       material.dispose();
       icoGeo.dispose();
       icoMat.dispose();
+      innerGeo.dispose();
+      innerMat.dispose();
     };
   }, []);
 
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ zIndex: 0 }}
     />
   );
