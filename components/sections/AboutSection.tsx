@@ -106,11 +106,11 @@ export default function AboutSection() {
               building tools that reduce friction between humans and intelligent systems.
             </p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="#contact" className="btn-primary">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+              <a href="#contact" className="btn-primary w-full sm:w-auto">
                 Get in touch →
               </a>
-              <a href="#projects" className="btn-secondary">
+              <a href="#projects" className="btn-secondary w-full sm:w-auto justify-center">
                 See my work
               </a>
             </div>
@@ -211,7 +211,7 @@ export default function AboutSection() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .about-grid {
             grid-template-columns: 1fr !important;
             gap: 48px !important;

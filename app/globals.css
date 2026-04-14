@@ -97,11 +97,30 @@
 
   /* ── Container ── */
   .container-editorial {
+    width: 100%;
     max-width: 1120px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 32px;
     padding-right: 32px;
+  }
+  @media (max-width: 1024px) {
+    .container-editorial {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+  @media (max-width: 768px) {
+    .container-editorial {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  @media (max-width: 480px) {
+    .container-editorial {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   /* ── Section Label (ALL CAPS, olive, spaced) ── */
@@ -178,8 +197,10 @@
   .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 12px 28px;
+    min-height: 44px;
     background: #A44A3F;
     color: #FDF9F3;
     font-family: "Inter", sans-serif;
@@ -206,8 +227,10 @@
   .btn-secondary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 12px 28px;
+    min-height: 44px;
     background: transparent;
     color: #1A1A1A;
     font-family: "Inter", sans-serif;
@@ -234,8 +257,10 @@
   .btn-ghost {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     padding: 8px 0;
+    min-height: 44px;
     background: transparent;
     color: #A44A3F;
     font-family: "Inter", sans-serif;
@@ -351,21 +376,26 @@
   }
 }
 
-/* ── Mobile ── */
-@media (max-width: 768px) {
-  .container-editorial {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
+/* ── Tablet & Small Laptop ── */
+@media (max-width: 1024px) {
   .project-row {
     grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 56px 0;
+  }
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ── Large Mobile & Small Tablet ── */
+@media (max-width: 768px) {
+  .project-row {
     gap: 32px;
     padding: 48px 0;
   }
-
   .timeline-item {
-    grid-template-columns: 1fr;
     gap: 8px;
   }
 }

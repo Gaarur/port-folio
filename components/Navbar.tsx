@@ -78,7 +78,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav style={{ display: "flex", alignItems: "center", gap: 36 }} className="hidden md:flex">
+          <nav style={{ alignItems: "center", gap: 36 }} className="hidden lg:flex">
             {NAV_LINKS.map((l) => (
               <Link
                 key={l.label}
@@ -115,15 +115,15 @@ export default function Navbar() {
 
           {/* Mobile burger */}
           <button
-            className="flex md:hidden"
+            className="flex lg:hidden flex-col justify-center items-center"
             onClick={() => setMenuOpen(!menuOpen)}
             style={{
               background: "none",
               border: "none",
               cursor: "pointer",
-              padding: 4,
-              display: "flex",
-              flexDirection: "column",
+              padding: "10px",
+              minWidth: 44,
+              minHeight: 44,
               gap: 5,
             }}
             aria-label="Toggle menu"

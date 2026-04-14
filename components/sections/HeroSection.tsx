@@ -46,8 +46,9 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Vertical text stamp */}
+      {/* Vertical text stamp (hidden on mobile/tablet) */}
       <div
+        className="hidden lg:block"
         style={{
           position: "absolute",
           right: 40,
@@ -174,14 +175,14 @@ export default function HeroSection() {
           </p>
 
           {/* CTA Buttons */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 56 }}>
-            <Link href="#projects" className="btn-primary">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-14">
+            <Link href="#projects" className="btn-primary w-full sm:w-auto text-center justify-center">
               View My Work →
             </Link>
             <a
               href="/Utkarsh_Raj_2408_Resume.pdf"
               download
-              className="btn-secondary"
+              className="btn-secondary w-full sm:w-auto text-center justify-center"
             >
               Download Resume ↓
             </a>

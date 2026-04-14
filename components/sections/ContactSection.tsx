@@ -172,6 +172,8 @@ export default function ContactSection() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                flexWrap: "wrap",
+                gap: "16px",
               }}
             >
               <div>
@@ -383,11 +385,11 @@ export default function ContactSection() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+        @media (max-width: 1024px) {
+          .contact-grid { grid-template-columns: 1fr !important; gap: 64px !important; }
         }
-        @media (max-width: 500px) {
-          .contact-grid form > div:first-child { grid-template-columns: 1fr !important; }
+        @media (max-width: 560px) {
+          .contact-grid form > div:first-child { grid-template-columns: 1fr !important; gap: 16px !important; }
         }
       `}</style>
     </section>

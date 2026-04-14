@@ -25,11 +25,11 @@ export default function Footer() {
       {/* Background glow strip */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-[#E8FF4D]/20 to-transparent" />
       
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-20">
+      <div className="max-width-[1200px] mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-20">
           
           {/* Brand - Span 5 */}
-          <div className="lg:col-span-5 space-y-8">
+          <div className="md:col-span-12 lg:col-span-5 space-y-6 lg:space-y-8">
             <div className="flex items-center gap-3 group">
               <div className="w-10 h-10 glass flex items-center justify-center rounded-lg border-[#E8FF4D]/20 text-[#E8FF4D]">
                 <Zap size={20} fill="#E8FF4D" className="opacity-80" />
@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation - Span 3 */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-4 lg:col-span-3">
             <p className="section-label mb-8">Navigation</p>
             <ul className="space-y-4">
               {navLinks.map((link) => (
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Socials & Availability - Span 4 */}
-          <div className="lg:col-span-4 space-y-12">
+          <div className="md:col-span-8 lg:col-span-4 space-y-8 lg:space-y-12">
             <div>
               <p className="section-label mb-8">Digital Presence</p>
               <div className="flex gap-4">

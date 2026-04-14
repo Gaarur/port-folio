@@ -211,6 +211,9 @@ export default function SkillsSection() {
       </div>
 
       <style>{`
+        @media (max-width: 1024px) {
+          .skills-grid { gap: 40px 32px !important; }
+        }
         @media (max-width: 768px) {
           .skills-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
         }

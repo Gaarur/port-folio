@@ -309,11 +309,11 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* Links */}
-                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    <Link href={p.live} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ fontSize: "0.82rem", padding: "10px 20px" }}>
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                    <Link href={p.live} target="_blank" rel="noopener noreferrer" className="btn-primary w-full sm:w-auto text-center" style={{ fontSize: "0.82rem", padding: "10px 20px" }}>
                       View Live ↗
                     </Link>
-                    <Link href={p.github} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ fontSize: "0.82rem", padding: "10px 20px" }}>
+                    <Link href={p.github} target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto text-center" style={{ fontSize: "0.82rem", padding: "10px 20px" }}>
                       GitHub ↗
                     </Link>
                   </div>
@@ -375,9 +375,12 @@ export default function ProjectsSection() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .project-case-row { grid-template-columns: 1fr !important; gap: 32px !important; }
+        @media (max-width: 1024px) {
+          .project-case-row { grid-template-columns: 1fr !important; gap: 48px !important; padding: 56px 0 !important; }
           .project-case-row > div { order: unset !important; }
+        }
+        @media (max-width: 768px) {
+          .project-case-row { gap: 32px !important; padding: 48px 0 !important; }
           .other-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 540px) {
